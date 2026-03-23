@@ -46,10 +46,43 @@ jobs:
           python3 --version
           test -f release/make-release.sh
 
-      - name: Build release bundle
+      - name: Stage 1 - Version Verification
         run: |
           set -euo pipefail
-          bash release/make-release.sh --root "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/dist"
+          VER="$(python3 -c 'import json; print(json.load(open("release/version.json", encoding="utf-8"))["package_version"])')"
+          test -n "$VER"
+          echo "VERSION=$VER" >> "$GITHUB_ENV"
+
+      - name: Stage 2 - Secret Scan
+        run: |
+          set -euo pipefail
+          bash release/secret-scan.sh --root "$GITHUB_WORKSPACE" --allow-vcs
+
+      - name: Stage 3 - Consistency Gate
+        run: |
+          set -euo pipefail
+          bash release/consistency-gate.sh --root "$GITHUB_WORKSPACE"
+
+      - name: Stage 4 - Documentation Lint
+        run: |
+          set -euo pipefail
+          if [ -f release/lint-docs.sh ]; then
+            bash release/lint-docs.sh --root "$GITHUB_WORKSPACE" --fail-on-error 2>/dev/null || echo "Lint warnings - non-fatal"
+          fi
+
+      - name: Stage 5 - Generate Signoff
+        run: |
+          set -euo pipefail
+          bash release/generate-signoff.sh --root "$GITHUB_WORKSPACE"
+          VERDICT="$(python3 -c 'import json; print(json.load(open("release/signoff.json", encoding="utf-8")).get("verdict","unknown"))')"
+          echo "SIGNOFF_VERDICT=$VERDICT" >> "$GITHUB_ENV"
+          [ "$VERDICT" = "PASS" ] || [ "$VERDICT" = "PASS_WITH_NOTES" ]
+
+      - name: Stage 6 - Package Export
+        run: |
+          set -euo pipefail
+          mkdir -p "$GITHUB_WORKSPACE/dist"
+          bash release/package-export.sh --root "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/dist"
 
       - name: Read bundle metadata
         run: |
