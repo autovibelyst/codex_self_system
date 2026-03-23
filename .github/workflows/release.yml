@@ -21,8 +21,35 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Verify release prerequisites
+        run: |
+          set -euo pipefail
+          echo "Workspace: $GITHUB_WORKSPACE"
+          ls -la "$GITHUB_WORKSPACE" | head -50
+
+          if ! command -v python3 >/dev/null 2>&1; then
+            if command -v python >/dev/null 2>&1; then
+              mkdir -p "$HOME/.local/bin"
+              ln -sf "$(command -v python)" "$HOME/.local/bin/python3"
+              echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+              export PATH="$HOME/.local/bin:$PATH"
+            else
+              echo "::error::Neither python3 nor python is available on runner"
+              exit 1
+            fi
+          fi
+
+          command -v bash
+          command -v python || true
+          command -v python3
+          python --version || true
+          python3 --version
+          test -f release/make-release.sh
+
       - name: Build release bundle
-        run: bash release/make-release.sh --root "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/dist"
+        run: |
+          set -euo pipefail
+          bash release/make-release.sh --root "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/dist"
 
       - name: Read bundle metadata
         run: |
