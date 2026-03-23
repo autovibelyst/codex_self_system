@@ -7,9 +7,9 @@
   "version": "v14.0",
   "bundle_name": "TT-Production-v14.0",
   "bundle_root": "TT-Production-v14.0",
-  "generated_at": "2026-03-23T21:39:43Z",
-  "total_files": 249,
-  "file_count": 249,
+  "generated_at": "2026-03-23T21:47:51Z",
+  "total_files": 284,
+  "file_count": 284,
   "required_root_files": [
     "COMMERCIAL_HANDOFF.md",
     "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
@@ -23,8 +23,20 @@
   ],
   "files": [
     {
+      "path": ".github/workflows/ci.yml",
+      "size": 263
+    },
+    {
+      "path": ".github/workflows/release.yml",
+      "size": 3631
+    },
+    {
+      "path": ".gitignore",
+      "size": 420
+    },
+    {
       "path": "COMMERCIAL_HANDOFF.md",
-      "size": 3784
+      "size": 3783
     },
     {
       "path": "COMMERCIAL_HANDOFF_AR.md",
@@ -32,11 +44,15 @@
     },
     {
       "path": "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
-      "size": 4158
+      "size": 4157
     },
     {
       "path": "DELIVERY_CHECKLIST.md",
-      "size": 1730
+      "size": 1729
+    },
+    {
+      "path": "DELIVERY_MESSAGE.md",
+      "size": 4877
     },
     {
       "path": "FULL_PACKAGE_GUIDE.md",
@@ -44,15 +60,19 @@
     },
     {
       "path": "LICENSE.md",
-      "size": 2961
+      "size": 2960
     },
     {
       "path": "MASTER_GUIDE.md",
       "size": 6899
     },
     {
+      "path": "README.md",
+      "size": 1846
+    },
+    {
       "path": "RELEASE_AUDIT_SUMMARY.md",
-      "size": 2066
+      "size": 2065
     },
     {
       "path": "RELEASE_NOTES_v14.0.md",
@@ -63,20 +83,172 @@
       "size": 2689
     },
     {
+      "path": "install.ps1",
+      "size": 2798
+    },
+    {
+      "path": "install.sh",
+      "size": 5092
+    },
+    {
+      "path": "quick-start.sh",
+      "size": 2261
+    },
+    {
       "path": "release/CHANGELOG.md",
       "size": 4430
     },
     {
+      "path": "release/PRODUCTION_ACCEPTANCE_REPORT.json",
+      "size": 5248
+    },
+    {
+      "path": "release/README.md",
+      "size": 573
+    },
+    {
+      "path": "release/bump-version.sh",
+      "size": 4223
+    },
+    {
+      "path": "release/ci-gate.sh",
+      "size": 5305
+    },
+    {
+      "path": "release/consistency-gate.sh",
+      "size": 17002
+    },
+    {
+      "path": "release/deployment-cert.json",
+      "size": 902
+    },
+    {
+      "path": "release/doc-contract-checker.sh",
+      "size": 6423
+    },
+    {
+      "path": "release/drift-scan.sh",
+      "size": 4939
+    },
+    {
       "path": "release/export-policy.json",
-      "size": 2023
+      "size": 1958
+    },
+    {
+      "path": "release/exposure-summary.json",
+      "size": 738
+    },
+    {
+      "path": "release/exposure-summary.md",
+      "size": 944
+    },
+    {
+      "path": "release/generate-bundle-manifest.py",
+      "size": 5203
+    },
+    {
+      "path": "release/generate-exposure.sh",
+      "size": 8380
+    },
+    {
+      "path": "release/generate-image-pins.sh",
+      "size": 10566
+    },
+    {
+      "path": "release/generate-signoff.sh",
+      "size": 47771
+    },
+    {
+      "path": "release/handoff-cert.json",
+      "size": 860
     },
     {
       "path": "release/image-inventory.lock.json",
-      "size": 15337
+      "size": 14954
+    },
+    {
+      "path": "release/lib/Version.ps1",
+      "size": 471
+    },
+    {
+      "path": "release/lib/version.sh",
+      "size": 2207
+    },
+    {
+      "path": "release/lint-docs.sh",
+      "size": 7125
+    },
+    {
+      "path": "release/make-release.sh",
+      "size": 3870
+    },
+    {
+      "path": "release/package-export.sh",
+      "size": 8622
+    },
+    {
+      "path": "release/release-pipeline.sh",
+      "size": 6286
+    },
+    {
+      "path": "release/restore-cert.json",
+      "size": 909
+    },
+    {
+      "path": "release/schema/exposure-summary.schema.json",
+      "size": 1068
+    },
+    {
+      "path": "release/schema/image-inventory.schema.json",
+      "size": 1507
+    },
+    {
+      "path": "release/schema/signoff.schema.json",
+      "size": 1417
+    },
+    {
+      "path": "release/schema/validation-matrix.schema.json",
+      "size": 1680
+    },
+    {
+      "path": "release/secret-scan-ci.sh",
+      "size": 3762
+    },
+    {
+      "path": "release/secret-scan.sh",
+      "size": 3138
+    },
+    {
+      "path": "release/signoff.json",
+      "size": 16751
+    },
+    {
+      "path": "release/smoke-results.json",
+      "size": 864
+    },
+    {
+      "path": "release/supportability-cert.json",
+      "size": 864
     },
     {
       "path": "release/validate-bundle.ps1",
-      "size": 54649
+      "size": 53708
+    },
+    {
+      "path": "release/validate-scripts.sh",
+      "size": 3398
+    },
+    {
+      "path": "release/validate-shell.sh",
+      "size": 1836
+    },
+    {
+      "path": "release/validation-matrix.json",
+      "size": 5658
+    },
+    {
+      "path": "release/validation-plan.md",
+      "size": 3613
     },
     {
       "path": "release/verify-manifest.sh",
@@ -104,7 +276,7 @@
     },
     {
       "path": "tt-core/compose/tt-core/.env.example",
-      "size": 5406
+      "size": 5308
     },
     {
       "path": "tt-core/compose/tt-core/Dockerfile.openclaw",
@@ -159,22 +331,6 @@
       "size": 15775
     },
     {
-      "path": "tt-core/compose/tt-core/volumes/openclaw/config/openclaw_template.json",
-      "size": 2133
-    },
-    {
-      "path": "tt-core/compose/tt-core/volumes/pgadmin/servers.json",
-      "size": 342
-    },
-    {
-      "path": "tt-core/compose/tt-core/volumes/postgres/init/00-tt-core-init.sh",
-      "size": 3520
-    },
-    {
-      "path": "tt-core/compose/tt-core/volumes/redis/config/redis.conf",
-      "size": 2304
-    },
-    {
       "path": "tt-core/compose/tt-tunnel/.env.example",
       "size": 362
     },
@@ -188,7 +344,7 @@
     },
     {
       "path": "tt-core/compose/tt-tunnel/templates/README.md",
-      "size": 314
+      "size": 313
     },
     {
       "path": "tt-core/config/profiles/ai-workstation.json",
@@ -208,7 +364,7 @@
     },
     {
       "path": "tt-core/config/public-exposure.policy.json",
-      "size": 6468
+      "size": 6244
     },
     {
       "path": "tt-core/config/schema/security-ack.schema.json",
@@ -216,7 +372,7 @@
     },
     {
       "path": "tt-core/config/schema/service-catalog.schema.json",
-      "size": 4071
+      "size": 4070
     },
     {
       "path": "tt-core/config/schema/services.select.schema.json",
@@ -228,11 +384,11 @@
     },
     {
       "path": "tt-core/config/service-catalog.json",
-      "size": 18485
+      "size": 17848
     },
     {
       "path": "tt-core/config/services.select.json",
-      "size": 2559
+      "size": 2498
     },
     {
       "path": "tt-core/docs/ADDING_A_SERVICE.md",
@@ -252,11 +408,11 @@
     },
     {
       "path": "tt-core/docs/CREDENTIAL_ROTATION.md",
-      "size": 5956
+      "size": 5954
     },
     {
       "path": "tt-core/docs/DR_PLAYBOOK.md",
-      "size": 3284
+      "size": 3283
     },
     {
       "path": "tt-core/docs/ENV-STRATEGY.md",
@@ -308,7 +464,7 @@
     },
     {
       "path": "tt-core/docs/QA-LINUX.md",
-      "size": 3109
+      "size": 3108
     },
     {
       "path": "tt-core/docs/QA.md",
@@ -328,7 +484,7 @@
     },
     {
       "path": "tt-core/docs/README-CLIENT.md",
-      "size": 4748
+      "size": 4747
     },
     {
       "path": "tt-core/docs/README.md",
@@ -336,7 +492,7 @@
     },
     {
       "path": "tt-core/docs/RECOVERY_PLAYBOOK.md",
-      "size": 2062
+      "size": 2061
     },
     {
       "path": "tt-core/docs/RESOURCE_REQUIREMENTS.md",
@@ -360,7 +516,7 @@
     },
     {
       "path": "tt-core/docs/SECURITY.md",
-      "size": 4419
+      "size": 4418
     },
     {
       "path": "tt-core/docs/SERVICES.md",
@@ -388,11 +544,11 @@
     },
     {
       "path": "tt-core/docs/UPGRADE_GUIDE.md",
-      "size": 3413
+      "size": 3412
     },
     {
       "path": "tt-core/env/.env.example",
-      "size": 4406
+      "size": 4317
     },
     {
       "path": "tt-core/env/tunnel.env.example",
@@ -400,11 +556,11 @@
     },
     {
       "path": "tt-core/installer/Install-TTCore.cmd",
-      "size": 1149
+      "size": 1147
     },
     {
       "path": "tt-core/installer/Install-TTCore.ps1",
-      "size": 21982
+      "size": 21679
     },
     {
       "path": "tt-core/installer/Install-TTCore.sh",
@@ -448,7 +604,7 @@
     },
     {
       "path": "tt-core/release/validate-release.ps1",
-      "size": 41299
+      "size": 40631
     },
     {
       "path": "tt-core/scripts/Approve-Telegram.cmd",
@@ -464,7 +620,7 @@
     },
     {
       "path": "tt-core/scripts/Diag.ps1",
-      "size": 3398
+      "size": 3396
     },
     {
       "path": "tt-core/scripts/Generate-Ingress.cmd",
@@ -472,7 +628,7 @@
     },
     {
       "path": "tt-core/scripts/Generate-Ingress.ps1",
-      "size": 5990
+      "size": 5988
     },
     {
       "path": "tt-core/scripts/Init-OpenClaw.cmd",
@@ -480,7 +636,7 @@
     },
     {
       "path": "tt-core/scripts/Init-OpenClaw.ps1",
-      "size": 16000
+      "size": 15999
     },
     {
       "path": "tt-core/scripts/Init-Supabase.ps1",
@@ -492,7 +648,7 @@
     },
     {
       "path": "tt-core/scripts/Init-TTCore.ps1",
-      "size": 13644
+      "size": 13428
     },
     {
       "path": "tt-core/scripts/Lock-ComposeImages.cmd",
@@ -508,7 +664,7 @@
     },
     {
       "path": "tt-core/scripts/Logs-Core.ps1",
-      "size": 681
+      "size": 679
     },
     {
       "path": "tt-core/scripts/Preflight-Check.cmd",
@@ -516,7 +672,7 @@
     },
     {
       "path": "tt-core/scripts/Preflight-Check.ps1",
-      "size": 25380
+      "size": 24947
     },
     {
       "path": "tt-core/scripts/Preflight-Supabase.cmd",
@@ -540,7 +696,7 @@
     },
     {
       "path": "tt-core/scripts/Restore-Snapshot.ps1",
-      "size": 3809
+      "size": 3807
     },
     {
       "path": "tt-core/scripts/Setup-BackupSchedule.cmd",
@@ -580,7 +736,7 @@
     },
     {
       "path": "tt-core/scripts/Start-Service.ps1",
-      "size": 3008
+      "size": 3006
     },
     {
       "path": "tt-core/scripts/Start-Tunnel.cmd",
@@ -604,7 +760,7 @@
     },
     {
       "path": "tt-core/scripts/Status.ps1",
-      "size": 581
+      "size": 579
     },
     {
       "path": "tt-core/scripts/Stop-Core.cmd",
@@ -612,7 +768,7 @@
     },
     {
       "path": "tt-core/scripts/Stop-Core.ps1",
-      "size": 840
+      "size": 838
     },
     {
       "path": "tt-core/scripts/Stop-Service.cmd",
@@ -620,7 +776,7 @@
     },
     {
       "path": "tt-core/scripts/Stop-Service.ps1",
-      "size": 1191
+      "size": 1189
     },
     {
       "path": "tt-core/scripts/Stop-Tunnel.cmd",
@@ -652,7 +808,7 @@
     },
     {
       "path": "tt-core/scripts/Update-TunnelURLs.ps1",
-      "size": 6883
+      "size": 6882
     },
     {
       "path": "tt-core/scripts/_compose_args.ps1",
@@ -668,7 +824,7 @@
     },
     {
       "path": "tt-core/scripts/backup/Backup-OffsiteSync.ps1",
-      "size": 5500
+      "size": 5499
     },
     {
       "path": "tt-core/scripts/backup/Backup-PostgresDumps.ps1",
@@ -684,7 +840,7 @@
     },
     {
       "path": "tt-core/scripts/backup/Restore-All.ps1",
-      "size": 8186
+      "size": 8000
     },
     {
       "path": "tt-core/scripts/backup/Restore-PostgresDump.ps1",
@@ -704,11 +860,11 @@
     },
     {
       "path": "tt-core/scripts/lib/Env.ps1",
-      "size": 10424
+      "size": 10155
     },
     {
       "path": "tt-core/scripts/lib/RuntimeEnv.ps1",
-      "size": 2581
+      "size": 2495
     },
     {
       "path": "tt-core/scripts/lib/ServiceCatalog.ps1",
@@ -724,11 +880,11 @@
     },
     {
       "path": "tt-core/scripts/ttcore.ps1",
-      "size": 2975
+      "size": 2973
     },
     {
       "path": "tt-core/scripts-linux/README.md",
-      "size": 3263
+      "size": 3262
     },
     {
       "path": "tt-core/scripts-linux/apply-profile.sh",
@@ -855,8 +1011,12 @@
       "size": 4308
     },
     {
+      "path": "tt-core/secrets/.gitignore",
+      "size": 10
+    },
+    {
       "path": "tt-core/secrets/.sops.yaml",
-      "size": 327
+      "size": 326
     },
     {
       "path": "tt-core/secrets/README.md",
@@ -889,26 +1049,6 @@
     {
       "path": "tt-supabase/compose/tt-supabase/docker-compose.yml",
       "size": 16700
-    },
-    {
-      "path": "tt-supabase/compose/tt-supabase/volumes/api/kong.yml",
-      "size": 451
-    },
-    {
-      "path": "tt-supabase/compose/tt-supabase/volumes/api/kong.yml.tpl",
-      "size": 8910
-    },
-    {
-      "path": "tt-supabase/compose/tt-supabase/volumes/functions/main/index.ts",
-      "size": 2037
-    },
-    {
-      "path": "tt-supabase/compose/tt-supabase/volumes/logs/vector.toml",
-      "size": 2168
-    },
-    {
-      "path": "tt-supabase/compose/tt-supabase/volumes/pooler/pooler.exs",
-      "size": 54
     },
     {
       "path": "tt-supabase/contract/integration.json",
@@ -944,7 +1084,7 @@
     },
     {
       "path": "tt-supabase/env/tt-supabase.env.example",
-      "size": 6603
+      "size": 6602
     },
     {
       "path": "tt-supabase/release/CHANGELOG.md",
@@ -1016,7 +1156,7 @@
     },
     {
       "path": "release/bundle-manifest.json",
-      "size": 21744
+      "size": 24084
     }
   ]
 }
