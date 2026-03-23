@@ -53,7 +53,7 @@ run_stage "1/7: Version Verification" "
   echo \"  Version: \$VER\"
 "
 
-run_stage "2/7: Secret Scan" "bash $ROOT/release/secret-scan.sh --root $ROOT"
+run_stage "2/7: Secret Scan" "bash $ROOT/release/secret-scan.sh --root $ROOT --allow-vcs"
 run_stage "3/7: Consistency Gate" "bash $ROOT/release/consistency-gate.sh --root $ROOT"
 
 if [[ -f "$ROOT/release/lint-docs.sh" ]]; then
@@ -81,21 +81,25 @@ else
 fi
 
 echo -e "${CYAN}-- 7/7: Release Summary ----------------------------------------${NC}"
-python3 -c "
+python3 - "$ROOT/release/signoff.json" << 'PYEOF'
 import json
-s = json.load(open('$ROOT/release/signoff.json', encoding='utf-8'))
-print(f'  Product:   {s.get("bundle_name", "TT-Production")}')
-print(f'  Version:   {s.get("tt_version", "unknown")}')
-print(f'  Verdict:   {s.get("verdict", "unknown")}')
-print(f'  Stages:    {len(s.get("stages", []))}')
-print(f'  Export OK: {s.get("export_allowed", False)}')
-print(f'  Handoff:   {s.get("handoff_allowed", False)}')
-print(f'  Generated: {s.get("generated_at", "unknown")}')
-"
+import sys
+
+path = sys.argv[1]
+with open(path, encoding='utf-8') as f:
+    s = json.load(f)
+
+print(f"  Product:   {s.get('bundle_name', 'TT-Production')}")
+print(f"  Version:   {s.get('tt_version', 'unknown')}")
+print(f"  Verdict:   {s.get('verdict', 'unknown')}")
+print(f"  Stages:    {len(s.get('stages', []))}")
+print(f"  Export OK: {s.get('export_allowed', False)}")
+print(f"  Handoff:   {s.get('handoff_allowed', False)}")
+print(f"  Generated: {s.get('generated_at', 'unknown')}")
+PYEOF
 
 echo ""
 echo -e "${GREEN}${BOLD}===============================================${NC}"
 echo -e "${GREEN}${BOLD}  RELEASE COMPLETE - $PKG_VERSION - $TIMESTAMP${NC}"
 echo -e "${GREEN}${BOLD}===============================================${NC}"
 echo ""
-

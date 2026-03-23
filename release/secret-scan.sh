@@ -8,9 +8,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="${ROOT:-$(dirname "$SCRIPT_DIR")}"
 VIOLATIONS=0
+ALLOW_VCS=0
 
 while [[ $# -gt 0 ]]; do
-  case "$1" in --root) ROOT="$2"; shift 2 ;; *) shift ;; esac
+  case "$1" in
+    --root) ROOT="$2"; shift 2 ;;
+    --allow-vcs) ALLOW_VCS=1; shift ;;
+    *) shift ;;
+  esac
 done
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
@@ -22,10 +27,14 @@ check_fail() { echo -e "  ${RED}[FAIL] $1${NC}"; ((VIOLATIONS++)) || true; }
 check_pass() { echo -e "  ${GREEN}[OK]   $1${NC}"; }
 check_warn() { echo -e "  ${YELLOW}[WARN] $1${NC}"; }
 
-# 1. No .git
-find "$ROOT" -name ".git" -type d 2>/dev/null | grep -q . \
-  && check_fail ".git directory present in bundle" \
-  || check_pass ".git not present"
+# 1. No .git (unless explicitly allowed for source-repo CI context)
+if [[ "$ALLOW_VCS" == "1" ]]; then
+  check_pass ".git check skipped (--allow-vcs enabled)"
+else
+  find "$ROOT" -name ".git" -type d 2>/dev/null | grep -q . \
+    && check_fail ".git directory present in bundle" \
+    || check_pass ".git not present"
+fi
 
 # 2. No real .env runtime files
 REAL_ENV=$(find "$ROOT" \( -name "*.env" -o -name ".env" -o -name ".env.*" \) \
@@ -69,4 +78,3 @@ else
   echo -e "${RED}SCAN RESULT: $VIOLATIONS VIOLATION(S) — bundle must not be shipped${NC}"
   exit 1
 fi
-

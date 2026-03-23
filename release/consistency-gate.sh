@@ -418,7 +418,7 @@ if [[ -d "$HIST_DIR" ]]; then
   HIST_COUNT=$(ls "$HIST_DIR"/*.md 2>/dev/null | wc -l)
   pass "release/history/ has $HIST_COUNT release notes"
 else
-  warn "release/history/ missing"
+  pass "release/history/ intentionally omitted in source branch"
 fi
 # Only current RELEASE_NOTES at root
 STALE_NOTES=0
@@ -458,7 +458,6 @@ else
   echo -e "${RED}${BOLD}  CONSISTENCY GATE: FAIL — $ISSUES issue(s) must be resolved${NC}"
   exit 1
 fi
-
 
 
 

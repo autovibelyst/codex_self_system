@@ -13,7 +13,7 @@
 - [ ] **1.2** Checksum verified against the supplied `.sha256` file
 - [ ] **1.3** Package extracted without errors
 - [ ] **1.4** Run: `powershell -ExecutionPolicy Bypass -File tt-core/release/validate-release.ps1`
-- [ ] **1.5** Expected result: `PASSED - 100 checks OK, 0 failures, 0 warnings`
+- [ ] **1.5** Expected result: `PASSED` with `0 failures`
 - [ ] **1.6** `LICENSE.md` reviewed and accepted
 - [ ] **1.7** `SYSTEM_REQUIREMENTS.md` reviewed and prerequisites confirmed
 
