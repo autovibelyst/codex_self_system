@@ -422,8 +422,8 @@ $scanFiles = Get-ChildItem -Path $Root -Recurse -File |
   Where-Object {
     $scanExts -contains $_.Extension -and
     $_.FullName -notmatch [regex]::Escape((Join-Path $Root 'archive')) -and
-    $_.FullName -notmatch 'release\\validate-release\.ps1' -and
-    $_.FullName -notmatch 'release\\CHANGELOG'
+    $_.FullName -notmatch 'release[\\/]+validate-release\.ps1' -and
+    $_.FullName -notmatch 'release[\\/]+CHANGELOG'
   }
 
 $staleFound = $false
@@ -444,8 +444,8 @@ Section 'Gate 1 — Release Identity Integrity'
 $staleVersionPatterns = @('v6\.7\.1', 'v6\.7\.2\.1', 'v6\.7\.2\.2\.2', 'v6\.7\.2\.3')
 $activeFiles = Get-ChildItem -Path $Root -Recurse -File |
   Where-Object {
-    $_.FullName -notmatch '\\history\\' -and
-    $_.FullName -notmatch '\\archive\\' -and
+    $_.FullName -notmatch '[\\/]history[\\/]' -and
+    $_.FullName -notmatch '[\\/]archive[\\/]' -and
     $_.FullName -notmatch 'CHANGELOG' -and
     $_.FullName -notmatch 'RELEASE_NOTES' -and
     $_.FullName -notmatch 'validate-release\.ps1'
