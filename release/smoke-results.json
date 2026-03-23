@@ -1,0 +1,45 @@
+{
+  "_schema": "tt-smoke-results/v1",
+  "_generator": "tt-core/scripts-linux/smoke-test.sh",
+  "generated_at": "2026-03-14T18:14:52Z",
+  "tt_version": "v14.0",
+  "overall": "PASS",
+  "services": [
+    {
+      "service": "n8n",
+      "kind": "core",
+      "status": "PASS",
+      "message": "ok"
+    },
+    {
+      "service": "pgadmin",
+      "kind": "core",
+      "status": "PASS",
+      "message": "ok"
+    },
+    {
+      "service": "postgres",
+      "kind": "core",
+      "status": "PASS",
+      "message": "ok"
+    },
+    {
+      "service": "redis",
+      "kind": "core",
+      "status": "PASS",
+      "message": "ok"
+    },
+    {
+      "service": "redisinsight",
+      "kind": "core",
+      "status": "PASS",
+      "message": "ok"
+    },
+    {
+      "service": "n8n-worker",
+      "kind": "core",
+      "status": "PASS",
+      "message": "running"
+    }
+  ]
+}

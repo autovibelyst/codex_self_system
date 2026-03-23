@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tt-validation-matrix/v1",
+  "title": "TT-Production Validation Matrix",
+  "type": "object",
+  "required": ["_schema","generated_at","tt_version","overall_result","services"],
+  "properties": {
+    "_schema":        { "type": "string", "const": "tt-validation-matrix/v1" },
+    "_generator":     { "type": "string" },
+    "generated_at":   { "type": "string", "format": "date-time" },
+    "tt_version":     { "type": "string" },
+    "profile":        { "type": ["string","null"] },
+    "overall_result": { "type": "string", "enum": ["PASS","DEGRADED","FAIL","SKIPPED"] },
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["service","kind","enabled","probe_type","status"],
+        "properties": {
+          "service":        { "type": "string" },
+          "kind":           { "type": "string", "enum": ["core","addon","companion"] },
+          "enabled":        { "type": "boolean" },
+          "probe_type":     { "type": "string", "enum": ["http_200","http_ready","tcp_connect","docker_healthy","file_exists","env_set","sops_decrypt","NONE"] },
+          "probe_endpoint": { "type": ["string","null"] },
+          "status":         { "type": "string", "enum": ["PASS","FAIL","WARN","SKIPPED","ERROR"] },
+          "duration_ms":    { "type": "integer" },
+          "message":        { "type": ["string","null"] },
+          "exposure_class": { "type": ["string","null"] }
+        }
+      }
+    },
+    "policy_violations": { "type": "array", "items": { "type": "string" } },
+    "notes":            { "type": "array", "items": { "type": "string" } }
+  }
+}

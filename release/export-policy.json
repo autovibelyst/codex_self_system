@@ -1,0 +1,79 @@
+{
+  "_comment": "Package export allowlist policy - commercial bundle excludes runtime data, release history, and internal validation artifacts.",
+  "_generator": "release/export-policy.json",
+  "_version": "v14.0",
+  "_strategy": "allowlist-first — only explicitly listed items may be included in export",
+  "forbidden_always": [
+    ".git",
+    ".github",
+    "dist",
+    "_external_compare",
+    ".DS_Store",
+    "Thumbs.db",
+    "*.key",
+    "*.pem",
+    "*.p12",
+    "*.pfx",
+    "*.bak",
+    "*.tmp",
+    "*.swp",
+    ".env",
+    "node_modules",
+    "__pycache__",
+    "*.pyc"
+  ],
+  "forbidden_patterns": [
+    ".*\\.env$(?!\\.example)",
+    "release/generate-signoff\\.sh\\.bak",
+    "workspace/",
+    "_compare_"
+  ],
+  "allowed_root_items": [
+    "COMMERCIAL_HANDOFF.md",
+    "COMMERCIAL_HANDOFF_AR.md",
+    "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
+    "DELIVERY_CHECKLIST.md",
+    "FULL_PACKAGE_GUIDE.md",
+    "LICENSE.md",
+    "MASTER_GUIDE.md",
+    "RELEASE_AUDIT_SUMMARY.md",
+    "RELEASE_NOTES_v14.0.md",
+    "SYSTEM_REQUIREMENTS.md",
+    "release/",
+    "tt-core/",
+    "tt-supabase/"
+  ],
+  "allowed_release_items": [
+    "CHANGELOG.md",
+    "bundle-manifest.json",
+    "export-policy.json",
+    "image-inventory.lock.json",
+    "validate-bundle.ps1",
+    "verify-manifest.sh",
+    "version.json"
+  ],
+  "secret_scan_patterns": [
+    "password\\s*=\\s*['\"][^'\"]{4,}",
+    "secret\\s*=\\s*['\"][^'\"]{4,}",
+    "api_key\\s*=\\s*['\"][^'\"]{4,}",
+    "token\\s*=\\s*['\"][^'\"]{16,}",
+    "AKIA[0-9A-Z]{16}",
+    "sk-[a-zA-Z0-9]{32,}",
+    "-----BEGIN.*PRIVATE KEY-----"
+  ],
+  "stale_version_scan_patterns": [
+    "TT-Production-v9\\.2",
+    "TT-Production-v9\\.4",
+    "TT-Production-v9\\.5",
+    "TT-Production-vNext"
+  ],
+  "max_bundle_size_mb": 100,
+  "require_checksum": true,
+  "require_signoff_pass": true,
+  "require_secret_scan_clean": true,
+  "excluded_directories": [
+    "reports",
+    "release/history"
+  ],
+  "version": "v14.0"
+}

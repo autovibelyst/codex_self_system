@@ -1,0 +1,175 @@
+{
+  "_schema": "tt-acceptance/v2",
+  "_generator": "release/release-pipeline.sh",
+  "_note": "Template — regenerate with release-pipeline.sh on live tree. Reference template only.",
+  "_artifact_role": "template",
+  "generated_at": "2026-03-14T10:00:00Z",
+  "tt_version": "v14.0",
+  "bundle_name": "TT-Production",
+  "build_id": "tt-production-v14.0-20260314",
+  "release_stage": "general-availability",
+  "pipeline_verdict": "PASS_WITH_NOTES",
+  "overall_verdict": "ACCEPTED FOR PRODUCTION DELIVERY — image digests pending resolution on live Docker daemon",
+  "validation_stages": {
+    "version_drift": {
+      "verdict": "PASS",
+      "detail": "All active files at canonical v14.0"
+    },
+    "schema_consistency": {
+      "verdict": "PASS",
+      "detail": "All generated artifacts have _generator markers"
+    },
+    "image_governance": {
+      "verdict": "PASS_WITH_NOTES",
+      "detail": "Image inventory present; digests require Docker daemon"
+    },
+    "secret_scan": {
+      "verdict": "PASS",
+      "detail": "No plaintext secrets detected"
+    },
+    "shell_validation": {
+      "verdict": "PASS",
+      "detail": "All scripts pass bash -n"
+    },
+    "doc_contract": {
+      "verdict": "PASS",
+      "detail": "All documented files exist"
+    },
+    "exposure_policy": {
+      "verdict": "PASS",
+      "detail": "Exposure policy reflects service catalog"
+    },
+    "bundle_assembly": {
+      "verdict": "PASS",
+      "detail": "Bundle manifest complete"
+    }
+  },
+  "defects_resolved_in_v14_0": [
+    {
+      "id": "FIX-01",
+      "priority": "P0",
+      "description": "pgAdmin banner hardcoded v12.0",
+      "resolution": "Updated to v14.0"
+    },
+    {
+      "id": "FIX-02",
+      "priority": "P0",
+      "description": "docker-compose.yml headers stale",
+      "resolution": "Updated to v14.0"
+    },
+    {
+      "id": "FIX-03",
+      "priority": "P0",
+      "description": "6 addon headers stale (v12.0)",
+      "resolution": "All updated to v14.0"
+    },
+    {
+      "id": "FIX-04",
+      "priority": "P0",
+      "description": "generate-signoff.sh: wrong ancestry + base_version checks",
+      "resolution": "Fixed to v13.0.8 → v14.0"
+    },
+    {
+      "id": "FIX-05",
+      "priority": "P0",
+      "description": "RELEASE_AUDIT_SUMMARY described v12.0",
+      "resolution": "Rebuilt for v14.0"
+    },
+    {
+      "id": "FIX-06",
+      "priority": "P0",
+      "description": "KNOWN_LIMITATIONS: KL-01 not marked resolved",
+      "resolution": "RESOLVED: SOPS+age active"
+    },
+    {
+      "id": "FIX-07",
+      "priority": "P0",
+      "description": "SECRET_MANAGEMENT.md said 'not implemented'",
+      "resolution": "Rewritten — SOPS is active"
+    },
+    {
+      "id": "FIX-08",
+      "priority": "P0",
+      "description": "status.sh JSON broken (complex Python expression)",
+      "resolution": "Simple printf with v14.0"
+    },
+    {
+      "id": "FIX-09",
+      "priority": "P0",
+      "description": "supabase/backup.sh JSON broken",
+      "resolution": "Fixed"
+    },
+    {
+      "id": "FIX-10",
+      "priority": "P0",
+      "description": "init.sh: --rotate and --migrate-from-plaintext modes missing",
+      "resolution": "Restored from v13.0-T"
+    },
+    {
+      "id": "FIX-11",
+      "priority": "P1",
+      "description": "n8n-worker missing from smoke-test.sh",
+      "resolution": "Added as MANDATORY check"
+    },
+    {
+      "id": "FIX-12",
+      "priority": "P1",
+      "description": "n8n workflow backup not in backup.sh",
+      "resolution": "Added with TT_N8N_API_KEY"
+    },
+    {
+      "id": "FIX-13",
+      "priority": "P1",
+      "description": "TT_N8N_API_KEY absent from .env.example",
+      "resolution": "Added Section 11"
+    },
+    {
+      "id": "FIX-14",
+      "priority": "P1",
+      "description": "40-67 scripts had v11.2/v12.0/v13.x banners",
+      "resolution": "All bumped to v14.0"
+    },
+    {
+      "id": "FIX-15",
+      "priority": "P1",
+      "description": "validate-bundle.ps1 had broken warning strings",
+      "resolution": "Fixed"
+    },
+    {
+      "id": "FIX-16",
+      "priority": "P1",
+      "description": "tt-core/release/manifest.json was truncated to 2 lines",
+      "resolution": "Full structure restored"
+    },
+    {
+      "id": "FIX-17",
+      "priority": "P1",
+      "description": "SECURITY-HARDENING.md listed SOPS as planned",
+      "resolution": "Updated: applied in v14.0"
+    },
+    {
+      "id": "FIX-18",
+      "priority": "P1",
+      "description": "RISK_REGISTER.md: R-01/R-02 still open",
+      "resolution": "Marked RESOLVED in v14.0"
+    },
+    {
+      "id": "FIX-19",
+      "priority": "P2",
+      "description": "start.sh convenience alias missing",
+      "resolution": "Added"
+    },
+    {
+      "id": "FIX-20",
+      "priority": "P2",
+      "description": "version.json incomplete (no ancestry/build_id/release_stage)",
+      "resolution": "Completed with all fields"
+    }
+  ],
+  "residual_items": [
+    "Image digests require live Docker daemon — run generate-image-pins.sh after pulling images",
+    "SOPS mode requires operator age keypair setup — see installer/lib/sops-setup.sh",
+    "KL-03: cap_drop:ALL pending for core services (v15.0)",
+    "KL-04: read_only:true pending for most services except qdrant (v15.0)"
+  ]
+}

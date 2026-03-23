@@ -1,0 +1,638 @@
+﻿{
+  "_comment": "TT-Core service selection configuration — v14.0",
+  "services": [
+    {
+      "service": "postgres",
+      "compose_service": "postgres",
+      "kind": "core",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "PostgreSQL",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-postgres",
+        "timeout_secs": 10
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "redis",
+      "compose_service": "redis",
+      "kind": "core",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Redis",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-redis",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "n8n",
+      "compose_service": "n8n",
+      "kind": "core",
+      "profile": null,
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_N8N",
+        "subdomain_var": "SUB_N8N",
+        "placeholder": "{N8N_RULE}",
+        "rule_key": "N8N_RULE"
+      },
+      "display_name": "n8n",
+      "route_name": "n8n",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_N8N_HOST_PORT",
+        "probe_path": "/healthz",
+        "expected_codes": [
+          200
+        ],
+        "probe_required": true
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "user",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:${TT_N8N_HOST_PORT:-5678}/healthz",
+        "timeout_secs": 15
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "n8n-worker",
+      "compose_service": "n8n-worker",
+      "kind": "core",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "n8n Worker",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-n8n-worker",
+        "timeout_secs": 15
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "pgadmin",
+      "compose_service": "pgadmin",
+      "kind": "core",
+      "profile": null,
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_PGADMIN",
+        "subdomain_var": "SUB_PGADMIN",
+        "placeholder": "{PGADMIN_RULE}",
+        "rule_key": "PGADMIN_RULE"
+      },
+      "display_name": "pgAdmin",
+      "route_name": "pgadmin",
+      "requires_explicit_ack": true,
+      "health": {
+        "port_env": "TT_PGADMIN_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          302
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "protected-admin",
+      "operator_mode": "admin",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-pgadmin",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": true
+    },
+    {
+      "service": "redisinsight",
+      "compose_service": "redisinsight",
+      "kind": "core",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "RedisInsight",
+      "health": {
+        "port_env": "TT_REDISINSIGHT_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          302
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "never-exposed",
+      "operator_mode": "admin",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-redisinsight",
+        "timeout_secs": 10
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "metabase",
+      "compose_service": "metabase",
+      "kind": "addon",
+      "profile": "metabase",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_METABASE",
+        "subdomain_var": "SUB_METABASE",
+        "placeholder": "{METABASE_RULE}",
+        "rule_key": "METABASE_RULE"
+      },
+      "display_name": "Metabase",
+      "route_name": "metabase",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_METABASE_HOST_PORT",
+        "probe_path": "/api/health",
+        "expected_codes": [
+          200
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "user",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:${TT_METABASE_HOST_PORT:-3000}/api/health",
+        "timeout_secs": 20
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "kanboard",
+      "compose_service": "kanboard",
+      "kind": "addon",
+      "profile": "kanboard",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_KANBOARD",
+        "subdomain_var": "SUB_KANBOARD",
+        "placeholder": "{KANBOARD_RULE}",
+        "rule_key": "KANBOARD_RULE"
+      },
+      "display_name": "Kanboard",
+      "route_name": "kanboard",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_KANBOARD_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          302
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "user",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:${TT_KANBOARD_HOST_PORT:-4040}/",
+        "timeout_secs": 10
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "wordpress",
+      "compose_service": "wordpress",
+      "kind": "addon",
+      "profile": "wordpress",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_WORDPRESS",
+        "subdomain_var": "SUB_WORDPRESS",
+        "placeholder": "{WORDPRESS_RULE}",
+        "rule_key": "WORDPRESS_RULE"
+      },
+      "display_name": "WordPress",
+      "route_name": "wordpress",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_WORDPRESS_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          301,
+          302
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "user",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:${TT_WORDPRESS_HOST_PORT:-8080}/",
+        "timeout_secs": 15
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "mariadb",
+      "compose_service": "mariadb",
+      "kind": "addon",
+      "profile": "wordpress",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "MariaDB",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-mariadb",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "qdrant",
+      "compose_service": "qdrant",
+      "kind": "addon",
+      "profile": "qdrant",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Qdrant",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_ready",
+        "endpoint": "http://localhost:6333/readyz",
+        "timeout_secs": 15
+      },
+      "backup_required": true,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "ollama",
+      "compose_service": "ollama",
+      "kind": "addon",
+      "profile": "ollama",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Ollama",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:11434/",
+        "timeout_secs": 20
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "openwebui",
+      "compose_service": "openwebui",
+      "kind": "addon",
+      "profile": "openwebui",
+      "additional_profiles": [
+        "ollama"
+      ],
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_OPENWEBUI",
+        "subdomain_var": "SUB_OPENWEBUI",
+        "placeholder": "{OPENWEBUI_RULE}",
+        "rule_key": "OPENWEBUI_RULE"
+      },
+      "display_name": "Open WebUI",
+      "route_name": "openwebui",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_OPENWEBUI_HOST_PORT",
+        "probe_path": "/health",
+        "expected_codes": [
+          200,
+          404
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "user",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-openwebui",
+        "timeout_secs": 20
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "uptime-kuma",
+      "compose_service": "uptime-kuma",
+      "kind": "addon",
+      "profile": "monitoring",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_MONITORING",
+        "subdomain_var": "SUB_MONITORING",
+        "placeholder": "{MONITORING_RULE}",
+        "rule_key": "MONITORING_RULE"
+      },
+      "display_name": "Uptime Kuma",
+      "route_name": "monitoring",
+      "requires_explicit_ack": false,
+      "health": {
+        "port_env": "TT_UPTIME_KUMA_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          301
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "customer-facing",
+      "operator_mode": "admin",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-uptime-kuma",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": false
+    },
+    {
+      "service": "portainer",
+      "compose_service": "portainer",
+      "kind": "addon",
+      "profile": "portainer",
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_PORTAINER",
+        "subdomain_var": "SUB_PORTAINER",
+        "placeholder": "{PORTAINER_RULE}",
+        "rule_key": "PORTAINER_RULE"
+      },
+      "display_name": "Portainer",
+      "route_name": "portainer",
+      "requires_explicit_ack": true,
+      "health": {
+        "port_env": "TT_PORTAINER_HOST_PORT",
+        "probe_path": "/api/status",
+        "expected_codes": [
+          200
+        ],
+        "probe_required": false
+      },
+      "exposure_class": "protected-admin",
+      "operator_mode": "admin",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:9000/api/status",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": true
+    },
+    {
+      "service": "openclaw",
+      "compose_service": "openclaw",
+      "kind": "addon",
+      "profile": "openclaw",
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "tunnel": {
+        "toggle": "TUNNEL_ROUTE_OPENCLAW",
+        "subdomain_var": "SUB_OPENCLAW",
+        "placeholder": "{OPENCLAW_RULE}",
+        "rule_key": "OPENCLAW_RULE"
+      },
+      "display_name": "OpenClaw",
+      "route_name": "openclaw",
+      "requires_explicit_ack": true,
+      "health": {
+        "port_env": "TT_OPENCLAW_HOST_PORT",
+        "probe_path": "/",
+        "expected_codes": [
+          200,
+          302,
+          401
+        ],
+        "probe_required": false,
+        "probe_skip_unless_env": "TT_OPENCLAW_MODE=production"
+      },
+      "exposure_class": "protected-admin",
+      "operator_mode": "admin",
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      },
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-openclaw",
+        "timeout_secs": 10
+      },
+      "backup_required": false,
+      "requires_restricted_ack": true
+    },
+    {
+      "service": "minio",
+      "compose_service": "minio",
+      "kind": "addon",
+      "profile": null,
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "MinIO",
+      "route_name": "minio",
+      "exposure_class": "customer-facing",
+      "operator_mode": "ops",
+      "backup_required": true,
+      "requires_restricted_ack": false,
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:9000/minio/health/live",
+        "timeout_secs": 10
+      },
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      }
+    },
+    {
+      "service": "pgbouncer",
+      "compose_service": "pgbouncer",
+      "kind": "addon",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "PgBouncer",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "backup_required": false,
+      "requires_restricted_ack": false,
+      "health_probe": {
+        "type": "docker_healthy",
+        "endpoint": "tt-core-pgbouncer",
+        "timeout_secs": 10
+      },
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      }
+    },
+    {
+      "service": "prometheus",
+      "compose_service": "prometheus",
+      "kind": "addon",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Prometheus",
+      "exposure_class": "never-exposed",
+      "operator_mode": "ops",
+      "backup_required": false,
+      "requires_restricted_ack": false,
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:9090/-/healthy",
+        "timeout_secs": 10
+      },
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      }
+    },
+    {
+      "service": "grafana",
+      "compose_service": "grafana",
+      "kind": "addon",
+      "profile": null,
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "Grafana",
+      "route_name": "grafana",
+      "exposure_class": "restricted-admin",
+      "operator_mode": "ops",
+      "backup_required": false,
+      "requires_restricted_ack": true,
+      "toggle": "TUNNEL_ROUTE_GRAFANA",
+      "subdomain_var": "SUB_GRAFANA",
+      "requires_explicit_ack": true,
+      "health_probe": {
+        "type": "http_200",
+        "endpoint": "http://localhost:3001/api/health",
+        "timeout_secs": 10
+      },
+      "docs_metadata": {
+        "listed_in": "docs/SERVICES.md",
+        "port_in": "docs/PORTS.md"
+      }
+    }
+  ],
+  "version": "v14.0",
+  "updated": "2026-03-14",
+  "_schema": "config/schema/service-catalog.schema.json"
+}

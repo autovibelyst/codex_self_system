@@ -1,0 +1,18 @@
+{
+  "product": "TT-Supabase",
+  "version": "v14.0",
+  "build_date": "2026-03-14",
+  "channel": "stable-commercial",
+  "notes": "v14.0 — GA Fully Hardened Commercial Release.",
+  "components": {
+    "compose": "compose/tt-supabase/docker-compose.yml",
+    "env_template": "env/tt-supabase.env.example",
+    "init": "tt-core/scripts/Init-Supabase.ps1",
+    "preflight": "tt-core/scripts/Preflight-Supabase.ps1",
+    "preflight_linux": "tt-core/scripts-linux/preflight-supabase.sh"
+  },
+  "bundle": "TT-Production-v14.0",
+  "component_version": "v14.0",
+  "package_version": "v14.0",
+  "generated_at": "2026-03-14T02:12:06Z"
+}

@@ -1,0 +1,29 @@
+{
+  "_comment": "GENERATED - do not edit. Regenerate: bash release/generate-exposure.sh",
+  "_generator": "release/generate-exposure.sh",
+  "_generated_at": "2026-03-14T23:53:48+03:00",
+  "generated_at": "2026-03-14T23:53:48+03:00",
+  "package_version": "v14.0",
+  "tunnel_enabled": false,
+  "domain": "__CLIENT_DOMAIN__",
+  "allow_restricted_admin": false,
+  "active_public_routes": [],
+  "blocked_admin_routes": [],
+  "local_only_services": [
+    "postgres",
+    "redis",
+    "n8n-worker",
+    "redisinsight",
+    "mariadb",
+    "qdrant",
+    "ollama",
+    "pgbouncer",
+    "prometheus"
+  ],
+  "risk_summary": {
+    "public_surfaces": 0,
+    "restricted_admin_blocked": 0,
+    "restricted_admin_exposed": 0,
+    "all_clear": true
+  }
+}

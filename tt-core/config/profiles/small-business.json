@@ -1,0 +1,43 @@
+{
+  "_name": "small-business",
+  "_description": "n8n + Metabase + Kanboard via Cloudflare Tunnel",
+  "_use_case": "Small business ops team. Automation + analytics + project management via secure tunnel.",
+  "tunnel": {
+    "enabled": true,
+    "routes": {
+      "n8n": true,
+      "metabase": true,
+      "kanboard": true,
+      "wordpress": false,
+      "pgadmin": false,
+      "openwebui": false,
+      "monitoring": false,
+      "portainer": false,
+      "openclaw": false
+    }
+  },
+  "profiles": {
+    "metabase": true,
+    "monitoring": true,
+    "wordpress": false,
+    "kanboard": true,
+    "qdrant": false,
+    "ollama": false,
+    "openwebui": false,
+    "portainer": false,
+    "openclaw": false
+  },
+  "security": {
+    "allow_restricted_admin_tunnel_routes": false
+  },
+  "backup": {
+    "auto_schedule": true,
+    "retain_days": 30,
+    "backup_time": "02:00",
+    "notify_on_failure": true
+  },
+  "version": "13.0.0",
+  "enabled_services": [
+    "pgbouncer"
+  ]
+}

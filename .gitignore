@@ -1,0 +1,32 @@
+# Build and release artifacts
+dist/
+
+# Runtime data and local state
+**/volumes/**
+**/backups/**
+**/logs/**
+**/.runtime-test
+**/.preflight-passed
+**/*.log
+
+# Secrets and env files (except templates/examples)
+.env
+.env.*
+**/.env
+**/.env.*
+!**/*.env.example
+!**/*.env.template
+!**/env.addon.template.env
+
+# Temporary/system files
+*.tmp
+*.bak
+*.swp
+*.pyc
+__pycache__/
+.DS_Store
+Thumbs.db
+
+# VCS/editor noise
+.idea/
+.vscode/

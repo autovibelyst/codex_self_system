@@ -1,0 +1,224 @@
+{
+  "_comment": "GENERATED FILE - do not edit manually. Regenerate: bash release/generate-exposure.sh",
+  "_generator": "release/generate-exposure.sh",
+  "_generated_at": "2026-03-14T23:53:48+03:00",
+  "generated_from": "config/service-catalog.json",
+  "generated_version": "v14.0",
+  "services": [
+    {
+      "service": "postgres",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "PostgreSQL"
+    },
+    {
+      "service": "redis",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Redis"
+    },
+    {
+      "service": "n8n",
+      "profile": null,
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "n8n",
+      "toggle": "TUNNEL_ROUTE_N8N",
+      "subdomain_var": "SUB_N8N",
+      "placeholder": "{N8N_RULE}",
+      "rule_key": "N8N_RULE",
+      "route_name": "n8n",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "n8n-worker",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "n8n Worker"
+    },
+    {
+      "service": "pgadmin",
+      "profile": null,
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "pgAdmin",
+      "toggle": "TUNNEL_ROUTE_PGADMIN",
+      "subdomain_var": "SUB_PGADMIN",
+      "placeholder": "{PGADMIN_RULE}",
+      "rule_key": "PGADMIN_RULE",
+      "route_name": "pgadmin",
+      "requires_explicit_ack": true
+    },
+    {
+      "service": "redisinsight",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "RedisInsight"
+    },
+    {
+      "service": "metabase",
+      "profile": "metabase",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "Metabase",
+      "toggle": "TUNNEL_ROUTE_METABASE",
+      "subdomain_var": "SUB_METABASE",
+      "placeholder": "{METABASE_RULE}",
+      "rule_key": "METABASE_RULE",
+      "route_name": "metabase",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "kanboard",
+      "profile": "kanboard",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "Kanboard",
+      "toggle": "TUNNEL_ROUTE_KANBOARD",
+      "subdomain_var": "SUB_KANBOARD",
+      "placeholder": "{KANBOARD_RULE}",
+      "rule_key": "KANBOARD_RULE",
+      "route_name": "kanboard",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "wordpress",
+      "profile": "wordpress",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "WordPress",
+      "toggle": "TUNNEL_ROUTE_WORDPRESS",
+      "subdomain_var": "SUB_WORDPRESS",
+      "placeholder": "{WORDPRESS_RULE}",
+      "rule_key": "WORDPRESS_RULE",
+      "route_name": "wordpress",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "mariadb",
+      "profile": "wordpress",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "MariaDB"
+    },
+    {
+      "service": "qdrant",
+      "profile": "qdrant",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Qdrant"
+    },
+    {
+      "service": "ollama",
+      "profile": "ollama",
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Ollama"
+    },
+    {
+      "service": "openwebui",
+      "profile": "openwebui",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "Open WebUI",
+      "toggle": "TUNNEL_ROUTE_OPENWEBUI",
+      "subdomain_var": "SUB_OPENWEBUI",
+      "placeholder": "{OPENWEBUI_RULE}",
+      "rule_key": "OPENWEBUI_RULE",
+      "route_name": "openwebui",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "uptime-kuma",
+      "profile": "monitoring",
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": true,
+      "display_name": "Uptime Kuma",
+      "toggle": "TUNNEL_ROUTE_MONITORING",
+      "subdomain_var": "SUB_MONITORING",
+      "placeholder": "{MONITORING_RULE}",
+      "rule_key": "MONITORING_RULE",
+      "route_name": "monitoring",
+      "requires_explicit_ack": false
+    },
+    {
+      "service": "portainer",
+      "profile": "portainer",
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "Portainer",
+      "toggle": "TUNNEL_ROUTE_PORTAINER",
+      "subdomain_var": "SUB_PORTAINER",
+      "placeholder": "{PORTAINER_RULE}",
+      "rule_key": "PORTAINER_RULE",
+      "route_name": "portainer",
+      "requires_explicit_ack": true
+    },
+    {
+      "service": "openclaw",
+      "profile": "openclaw",
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "OpenClaw",
+      "toggle": "TUNNEL_ROUTE_OPENCLAW",
+      "subdomain_var": "SUB_OPENCLAW",
+      "placeholder": "{OPENCLAW_RULE}",
+      "rule_key": "OPENCLAW_RULE",
+      "route_name": "openclaw",
+      "requires_explicit_ack": true
+    },
+    {
+      "service": "minio",
+      "profile": null,
+      "tier": "public_app",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "MinIO"
+    },
+    {
+      "service": "pgbouncer",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "PgBouncer"
+    },
+    {
+      "service": "prometheus",
+      "profile": null,
+      "tier": "local_only",
+      "public_capable": false,
+      "auto_start_tunnel": false,
+      "display_name": "Prometheus"
+    },
+    {
+      "service": "grafana",
+      "profile": null,
+      "tier": "restricted_admin",
+      "public_capable": true,
+      "auto_start_tunnel": false,
+      "display_name": "Grafana",
+      "requires_explicit_ack": true
+    }
+  ]
+}

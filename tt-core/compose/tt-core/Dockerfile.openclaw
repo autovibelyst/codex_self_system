@@ -1,0 +1,83 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# TT-Core — Dockerfile.openclaw  (v6.7.5)
+#
+# Key improvements:
+#   1. Base image pinned to explicit minor version (22.14.0) — not a floating tag
+#   2. Correct build order: backend → UI assets (prevents asset wipe)
+#   3. TT entrypoint script for setup/production mode switching
+#   4. Healthcheck endpoint exposed
+#   5. Non-root user (node) for security
+#
+# PRODUCTION HARDENING NOTE:
+#   For maximum reproducibility, also pin the base image with a digest:
+#     FROM node:22.14.0-bookworm@sha256:<run: docker inspect node:22.14.0-bookworm --format '{{index .RepoDigests 0}}'>
+#   Run scripts\Lock-ComposeImages.ps1 after pulling to capture all digests.
+#
+# Build context: ./openclaw_source  (must be cloned before first build)
+#   git clone https://github.com/openclaw/openclaw.git compose/tt-core/openclaw_source
+# ─────────────────────────────────────────────────────────────────────────────
+
+FROM node:22.14.0-bookworm
+
+ARG OPENCLAW_SOURCE_REF_LABEL=__PIN_GIT_TAG_OR_COMMIT__
+LABEL tt.openclaw.source_ref=$OPENCLAW_SOURCE_REF_LABEL
+LABEL tt.build.version="1.2.0-production"
+
+WORKDIR /app
+
+# Enable pnpm (required by OpenClaw's build system)
+RUN corepack enable
+
+# Copy all source from build context (openclaw_source/)
+COPY . .
+
+# ── Install dependencies ────────────────────────────────────────────────────
+RUN pnpm install --frozen-lockfile
+
+# ── Build backend (CLI + gateway) ───────────────────────────────────────────
+RUN npm run build
+
+# ── Build Dashboard UI assets ───────────────────────────────────────────────
+# CRITICAL: Must run AFTER backend build.
+# Running ui:build first then npm build would wipe the dist/ folder.
+RUN pnpm ui:build
+
+# ── Link openclaw CLI globally ───────────────────────────────────────────────
+RUN npm link
+
+# ── TT-Core entrypoint script ────────────────────────────────────────────────
+RUN printf '%s\n' \
+  '#!/bin/sh' \
+  '# TT-Core OpenClaw Entrypoint v6.7.5' \
+  'MODE="${TT_OPENCLAW_MODE:-setup}"' \
+  '' \
+  'if [ "$MODE" = "production" ]; then' \
+  '  echo "[TT-Core OpenClaw] Starting PRODUCTION MODE (gateway port 18789)..."' \
+  '  exec openclaw gateway --port 18789' \
+  'else' \
+  '  echo "[TT-Core OpenClaw] ================================================"' \
+  '  echo "[TT-Core OpenClaw] SETUP MODE — container is idle"' \
+  '  echo "[TT-Core OpenClaw]"' \
+  '  echo "[TT-Core OpenClaw] Complete these steps to go live:"' \
+  '  echo "[TT-Core OpenClaw]  1. Run wizard:"' \
+  '  echo "[TT-Core OpenClaw]     docker exec -it tt-core-openclaw openclaw onboard --install-daemon"' \
+  '  echo "[TT-Core OpenClaw]  2. Edit config:"' \
+  '  echo "[TT-Core OpenClaw]     compose/tt-core/volumes/openclaw/data/openclaw.json"' \
+  '  echo "[TT-Core OpenClaw]     Set: bind=lan, model prefix=google/ or ollama/"' \
+  '  echo "[TT-Core OpenClaw]  3. Switch mode:"' \
+  '  echo "[TT-Core OpenClaw]     Set TT_OPENCLAW_MODE=production in .env"' \
+  '  echo "[TT-Core OpenClaw]  4. Restart: scripts\Start-Service.ps1 -Service openclaw"' \
+  '  echo "[TT-Core OpenClaw] ================================================"' \
+  '  exec tail -f /dev/null' \
+  'fi' \
+  > /app/tt-entrypoint.sh \
+  && chmod +x /app/tt-entrypoint.sh
+
+# Security: run as non-root user
+# Create node user home ownership, then drop privileges
+RUN chown -R node:node /app
+USER node
+
+EXPOSE 18789
+
+ENTRYPOINT ["/app/tt-entrypoint.sh"]

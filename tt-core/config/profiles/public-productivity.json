@@ -1,0 +1,39 @@
+{
+  "_name": "public-productivity",
+  "_description": "Full public stack with tunnel-exposed services",
+  "_use_case": "Fully external-facing productivity platform for a small organization.",
+  "tunnel": {
+    "enabled": true,
+    "routes": {
+      "n8n": true,
+      "wordpress": true,
+      "kanboard": true,
+      "metabase": true,
+      "openwebui": false,
+      "monitoring": true,
+      "pgadmin": false,
+      "portainer": false,
+      "openclaw": false
+    }
+  },
+  "profiles": {
+    "metabase": true,
+    "monitoring": true,
+    "wordpress": true,
+    "kanboard": true,
+    "qdrant": false,
+    "ollama": false,
+    "openwebui": false,
+    "portainer": false,
+    "openclaw": false
+  },
+  "security": {
+    "allow_restricted_admin_tunnel_routes": false
+  },
+  "backup": {
+    "auto_schedule": true,
+    "retain_days": 60,
+    "backup_time": "01:00",
+    "notify_on_failure": true
+  }
+}

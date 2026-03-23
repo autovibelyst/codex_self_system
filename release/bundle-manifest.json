@@ -1,0 +1,1022 @@
+{
+  "_schema": "tt-bundle-manifest/v2",
+  "_generator": "release/generate-bundle-manifest.py",
+  "_note": "Generated from the finalized commercial bundle tree.",
+  "package_version": "v14.0",
+  "tt_version": "v14.0",
+  "version": "v14.0",
+  "bundle_name": "TT-Production-v14.0",
+  "bundle_root": "TT-Production-v14.0",
+  "generated_at": "2026-03-23T20:15:17Z",
+  "total_files": 249,
+  "file_count": 249,
+  "required_root_files": [
+    "COMMERCIAL_HANDOFF.md",
+    "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
+    "DELIVERY_CHECKLIST.md",
+    "FULL_PACKAGE_GUIDE.md",
+    "LICENSE.md",
+    "MASTER_GUIDE.md",
+    "RELEASE_AUDIT_SUMMARY.md",
+    "RELEASE_NOTES_v14.0.md",
+    "SYSTEM_REQUIREMENTS.md"
+  ],
+  "files": [
+    {
+      "path": "COMMERCIAL_HANDOFF.md",
+      "size": 3784
+    },
+    {
+      "path": "COMMERCIAL_HANDOFF_AR.md",
+      "size": 4232
+    },
+    {
+      "path": "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
+      "size": 4180
+    },
+    {
+      "path": "DELIVERY_CHECKLIST.md",
+      "size": 1730
+    },
+    {
+      "path": "FULL_PACKAGE_GUIDE.md",
+      "size": 2412
+    },
+    {
+      "path": "LICENSE.md",
+      "size": 2961
+    },
+    {
+      "path": "MASTER_GUIDE.md",
+      "size": 6899
+    },
+    {
+      "path": "release/CHANGELOG.md",
+      "size": 4430
+    },
+    {
+      "path": "release/export-policy.json",
+      "size": 2023
+    },
+    {
+      "path": "release/image-inventory.lock.json",
+      "size": 15337
+    },
+    {
+      "path": "release/validate-bundle.ps1",
+      "size": 54649
+    },
+    {
+      "path": "release/verify-manifest.sh",
+      "size": 7167
+    },
+    {
+      "path": "release/version.json",
+      "size": 1069
+    },
+    {
+      "path": "RELEASE_AUDIT_SUMMARY.md",
+      "size": 2066
+    },
+    {
+      "path": "RELEASE_NOTES_v14.0.md",
+      "size": 4008
+    },
+    {
+      "path": "SYSTEM_REQUIREMENTS.md",
+      "size": 2689
+    },
+    {
+      "path": "tt-core/compose/tt-core/.env.example",
+      "size": 5406
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/00-template.addon.yml",
+      "size": 804
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/05-pgbouncer.addon.yml",
+      "size": 1115
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/05-wordpress.addon.yml",
+      "size": 1682
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/10-kanboard.addon.yml",
+      "size": 909
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/20-openwebui.addon.yml",
+      "size": 677
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/30-uptime-kuma.addon.yml",
+      "size": 555
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/40-portainer.addon.yml",
+      "size": 1022
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/50-openclaw.addon.yml",
+      "size": 5729
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/60-minio.addon.yml",
+      "size": 1151
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/70-monitoring.addon.yml",
+      "size": 2177
+    },
+    {
+      "path": "tt-core/compose/tt-core/addons/80-qdrant.addon.yml",
+      "size": 1059
+    },
+    {
+      "path": "tt-core/compose/tt-core/docker-compose.yml",
+      "size": 15775
+    },
+    {
+      "path": "tt-core/compose/tt-core/Dockerfile.openclaw",
+      "size": 4243
+    },
+    {
+      "path": "tt-core/compose/tt-core/volumes/openclaw/config/openclaw_template.json",
+      "size": 2133
+    },
+    {
+      "path": "tt-core/compose/tt-core/volumes/pgadmin/servers.json",
+      "size": 342
+    },
+    {
+      "path": "tt-core/compose/tt-core/volumes/postgres/init/00-tt-core-init.sh",
+      "size": 3520
+    },
+    {
+      "path": "tt-core/compose/tt-core/volumes/redis/config/redis.conf",
+      "size": 2304
+    },
+    {
+      "path": "tt-core/compose/tt-tunnel/.env.example",
+      "size": 362
+    },
+    {
+      "path": "tt-core/compose/tt-tunnel/cloudflared-health.sh",
+      "size": 958
+    },
+    {
+      "path": "tt-core/compose/tt-tunnel/docker-compose.yml",
+      "size": 963
+    },
+    {
+      "path": "tt-core/compose/tt-tunnel/templates/README.md",
+      "size": 314
+    },
+    {
+      "path": "tt-core/config/profiles/ai-workstation.json",
+      "size": 1091
+    },
+    {
+      "path": "tt-core/config/profiles/local-private.json",
+      "size": 857
+    },
+    {
+      "path": "tt-core/config/profiles/public-productivity.json",
+      "size": 895
+    },
+    {
+      "path": "tt-core/config/profiles/small-business.json",
+      "size": 979
+    },
+    {
+      "path": "tt-core/config/public-exposure.policy.json",
+      "size": 6468
+    },
+    {
+      "path": "tt-core/config/schema/security-ack.schema.json",
+      "size": 906
+    },
+    {
+      "path": "tt-core/config/schema/service-catalog.schema.json",
+      "size": 4071
+    },
+    {
+      "path": "tt-core/config/schema/services.select.schema.json",
+      "size": 5329
+    },
+    {
+      "path": "tt-core/config/security-ack.json",
+      "size": 681
+    },
+    {
+      "path": "tt-core/config/service-catalog.json",
+      "size": 18488
+    },
+    {
+      "path": "tt-core/config/services.select.json",
+      "size": 2559
+    },
+    {
+      "path": "tt-core/docs/ADDING_A_SERVICE.md",
+      "size": 3774
+    },
+    {
+      "path": "tt-core/docs/AUTHORITY_MODEL.md",
+      "size": 1914
+    },
+    {
+      "path": "tt-core/docs/BACKUP-VOLUMES-LIST.md",
+      "size": 1213
+    },
+    {
+      "path": "tt-core/docs/BACKUP.md",
+      "size": 4176
+    },
+    {
+      "path": "tt-core/docs/CREDENTIAL_ROTATION.md",
+      "size": 5956
+    },
+    {
+      "path": "tt-core/docs/DR_PLAYBOOK.md",
+      "size": 3284
+    },
+    {
+      "path": "tt-core/docs/ENV-STRATEGY.md",
+      "size": 1652
+    },
+    {
+      "path": "tt-core/docs/GPU_SETUP.md",
+      "size": 4689
+    },
+    {
+      "path": "tt-core/docs/IMAGE_PINNING.md",
+      "size": 3527
+    },
+    {
+      "path": "tt-core/docs/KNOWN_LIMITATIONS.md",
+      "size": 7781
+    },
+    {
+      "path": "tt-core/docs/MASTER_PRODUCTION_GUIDE.md",
+      "size": 3845
+    },
+    {
+      "path": "tt-core/docs/OPENCLAW.md",
+      "size": 8673
+    },
+    {
+      "path": "tt-core/docs/OPERATIONS_RUNBOOK.md",
+      "size": 2752
+    },
+    {
+      "path": "tt-core/docs/PLATFORM_SUPPORT.md",
+      "size": 1735
+    },
+    {
+      "path": "tt-core/docs/PLATFORM_SUPPORT_MATRIX.md",
+      "size": 1742
+    },
+    {
+      "path": "tt-core/docs/PORTS.md",
+      "size": 2494
+    },
+    {
+      "path": "tt-core/docs/PROFILES_AND_ADDONS.md",
+      "size": 3647
+    },
+    {
+      "path": "tt-core/docs/QA-EN.md",
+      "size": 3216
+    },
+    {
+      "path": "tt-core/docs/QA-LINUX.md",
+      "size": 3109
+    },
+    {
+      "path": "tt-core/docs/QA.md",
+      "size": 2300
+    },
+    {
+      "path": "tt-core/docs/QUICKSTART-AR.md",
+      "size": 4590
+    },
+    {
+      "path": "tt-core/docs/QUICKSTART.md",
+      "size": 4385
+    },
+    {
+      "path": "tt-core/docs/RAG.md",
+      "size": 1577
+    },
+    {
+      "path": "tt-core/docs/README-CLIENT.md",
+      "size": 4748
+    },
+    {
+      "path": "tt-core/docs/README.md",
+      "size": 1198
+    },
+    {
+      "path": "tt-core/docs/RECOVERY_PLAYBOOK.md",
+      "size": 2062
+    },
+    {
+      "path": "tt-core/docs/RESOURCE_REQUIREMENTS.md",
+      "size": 4350
+    },
+    {
+      "path": "tt-core/docs/RESTRICTED_ADMIN_GUIDE.md",
+      "size": 1641
+    },
+    {
+      "path": "tt-core/docs/RISK_REGISTER.md",
+      "size": 2677
+    },
+    {
+      "path": "tt-core/docs/SECRET_MANAGEMENT.md",
+      "size": 2180
+    },
+    {
+      "path": "tt-core/docs/SECURITY-HARDENING.md",
+      "size": 2147
+    },
+    {
+      "path": "tt-core/docs/SECURITY.md",
+      "size": 4419
+    },
+    {
+      "path": "tt-core/docs/SERVICES.md",
+      "size": 4958
+    },
+    {
+      "path": "tt-core/docs/SOPS_GUIDE.md",
+      "size": 2537
+    },
+    {
+      "path": "tt-core/docs/TROUBLESHOOTING.md",
+      "size": 13380
+    },
+    {
+      "path": "tt-core/docs/TUNNEL-SUBDOMAINS-POLICY.md",
+      "size": 3086
+    },
+    {
+      "path": "tt-core/docs/TUNNEL.md",
+      "size": 1928
+    },
+    {
+      "path": "tt-core/docs/UPGRADE.md",
+      "size": 1056
+    },
+    {
+      "path": "tt-core/docs/UPGRADE_GUIDE.md",
+      "size": 3413
+    },
+    {
+      "path": "tt-core/env/.env.example",
+      "size": 4406
+    },
+    {
+      "path": "tt-core/env/tunnel.env.example",
+      "size": 327
+    },
+    {
+      "path": "tt-core/INDEX.md",
+      "size": 627
+    },
+    {
+      "path": "tt-core/installer/Install-TTCore.cmd",
+      "size": 1149
+    },
+    {
+      "path": "tt-core/installer/Install-TTCore.ps1",
+      "size": 21982
+    },
+    {
+      "path": "tt-core/installer/Install-TTCore.sh",
+      "size": 17734
+    },
+    {
+      "path": "tt-core/installer/lib/profiles.sh",
+      "size": 2202
+    },
+    {
+      "path": "tt-core/installer/lib/sops-setup.sh",
+      "size": 7649
+    },
+    {
+      "path": "tt-core/installer/lib/summary.sh",
+      "size": 3533
+    },
+    {
+      "path": "tt-core/installer/README.md",
+      "size": 785
+    },
+    {
+      "path": "tt-core/PORT_POLICY.md",
+      "size": 915
+    },
+    {
+      "path": "tt-core/README.md",
+      "size": 1442
+    },
+    {
+      "path": "tt-core/README_ADDONS.md",
+      "size": 3018
+    },
+    {
+      "path": "tt-core/release/CHANGELOG.md",
+      "size": 3720
+    },
+    {
+      "path": "tt-core/release/CHECKLIST.md",
+      "size": 2568
+    },
+    {
+      "path": "tt-core/release/manifest.json",
+      "size": 3069
+    },
+    {
+      "path": "tt-core/release/PRODUCTION_SIGNOFF_TEMPLATE.md",
+      "size": 404
+    },
+    {
+      "path": "tt-core/release/validate-release.ps1",
+      "size": 41299
+    },
+    {
+      "path": "tt-core/release/VERSIONING.md",
+      "size": 1282
+    },
+    {
+      "path": "tt-core/scripts/_compose_args.ps1",
+      "size": 1944
+    },
+    {
+      "path": "tt-core/scripts/_profiles.ps1",
+      "size": 525
+    },
+    {
+      "path": "tt-core/scripts/Approve-Telegram.cmd",
+      "size": 97
+    },
+    {
+      "path": "tt-core/scripts/Approve-Telegram.ps1",
+      "size": 4368
+    },
+    {
+      "path": "tt-core/scripts/backup/_lib/BackupLib.ps1",
+      "size": 1903
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-All.ps1",
+      "size": 5669
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-OffsiteSync.ps1",
+      "size": 5500
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-PostgresDumps.ps1",
+      "size": 1971
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-Retention.ps1",
+      "size": 1874
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-Volumes.ps1",
+      "size": 688
+    },
+    {
+      "path": "tt-core/scripts/backup/Restore-All.ps1",
+      "size": 8186
+    },
+    {
+      "path": "tt-core/scripts/backup/Restore-PostgresDump.ps1",
+      "size": 2300
+    },
+    {
+      "path": "tt-core/scripts/backup/Setup-BackupSchedule.ps1",
+      "size": 3634
+    },
+    {
+      "path": "tt-core/scripts/deps.json",
+      "size": 367
+    },
+    {
+      "path": "tt-core/scripts/Diag.cmd",
+      "size": 85
+    },
+    {
+      "path": "tt-core/scripts/Diag.ps1",
+      "size": 3398
+    },
+    {
+      "path": "tt-core/scripts/Generate-Ingress.cmd",
+      "size": 97
+    },
+    {
+      "path": "tt-core/scripts/Generate-Ingress.ps1",
+      "size": 5990
+    },
+    {
+      "path": "tt-core/scripts/Init-OpenClaw.cmd",
+      "size": 94
+    },
+    {
+      "path": "tt-core/scripts/Init-OpenClaw.ps1",
+      "size": 16000
+    },
+    {
+      "path": "tt-core/scripts/Init-Supabase.ps1",
+      "size": 6303
+    },
+    {
+      "path": "tt-core/scripts/Init-TTCore.cmd",
+      "size": 81
+    },
+    {
+      "path": "tt-core/scripts/Init-TTCore.ps1",
+      "size": 13644
+    },
+    {
+      "path": "tt-core/scripts/lib/Env.ps1",
+      "size": 10424
+    },
+    {
+      "path": "tt-core/scripts/lib/RuntimeEnv.ps1",
+      "size": 2581
+    },
+    {
+      "path": "tt-core/scripts/lib/ServiceCatalog.ps1",
+      "size": 11428
+    },
+    {
+      "path": "tt-core/scripts/lib/Version.ps1",
+      "size": 372
+    },
+    {
+      "path": "tt-core/scripts/Lock-ComposeImages.cmd",
+      "size": 140
+    },
+    {
+      "path": "tt-core/scripts/Lock-ComposeImages.ps1",
+      "size": 1625
+    },
+    {
+      "path": "tt-core/scripts/Logs-Core.cmd",
+      "size": 79
+    },
+    {
+      "path": "tt-core/scripts/Logs-Core.ps1",
+      "size": 681
+    },
+    {
+      "path": "tt-core/scripts/Preflight-Check.cmd",
+      "size": 138
+    },
+    {
+      "path": "tt-core/scripts/Preflight-Check.ps1",
+      "size": 25380
+    },
+    {
+      "path": "tt-core/scripts/Preflight-Supabase.cmd",
+      "size": 144
+    },
+    {
+      "path": "tt-core/scripts/Preflight-Supabase.ps1",
+      "size": 3363
+    },
+    {
+      "path": "tt-core/scripts/Restart-Core.cmd",
+      "size": 82
+    },
+    {
+      "path": "tt-core/scripts/Restart-Core.ps1",
+      "size": 366
+    },
+    {
+      "path": "tt-core/scripts/Restore-Snapshot.cmd",
+      "size": 107
+    },
+    {
+      "path": "tt-core/scripts/Restore-Snapshot.ps1",
+      "size": 3809
+    },
+    {
+      "path": "tt-core/scripts/Setup-BackupSchedule.cmd",
+      "size": 111
+    },
+    {
+      "path": "tt-core/scripts/Setup-BackupSchedule.ps1",
+      "size": 5570
+    },
+    {
+      "path": "tt-core/scripts/Show-ComposeImages.cmd",
+      "size": 140
+    },
+    {
+      "path": "tt-core/scripts/Show-ComposeImages.ps1",
+      "size": 767
+    },
+    {
+      "path": "tt-core/scripts/Show-TunnelPlan.ps1",
+      "size": 2886
+    },
+    {
+      "path": "tt-core/scripts/Smoke-Test.ps1",
+      "size": 6473
+    },
+    {
+      "path": "tt-core/scripts/Start-Core.cmd",
+      "size": 80
+    },
+    {
+      "path": "tt-core/scripts/Start-Core.ps1",
+      "size": 2439
+    },
+    {
+      "path": "tt-core/scripts/Start-Service.cmd",
+      "size": 83
+    },
+    {
+      "path": "tt-core/scripts/Start-Service.ps1",
+      "size": 3008
+    },
+    {
+      "path": "tt-core/scripts/Start-Tunnel.cmd",
+      "size": 82
+    },
+    {
+      "path": "tt-core/scripts/Start-Tunnel.ps1",
+      "size": 3069
+    },
+    {
+      "path": "tt-core/scripts/Status-Core.cmd",
+      "size": 81
+    },
+    {
+      "path": "tt-core/scripts/Status-Core.ps1",
+      "size": 1398
+    },
+    {
+      "path": "tt-core/scripts/Status.cmd",
+      "size": 76
+    },
+    {
+      "path": "tt-core/scripts/Status.ps1",
+      "size": 581
+    },
+    {
+      "path": "tt-core/scripts/Stop-Core.cmd",
+      "size": 79
+    },
+    {
+      "path": "tt-core/scripts/Stop-Core.ps1",
+      "size": 840
+    },
+    {
+      "path": "tt-core/scripts/Stop-Service.cmd",
+      "size": 82
+    },
+    {
+      "path": "tt-core/scripts/Stop-Service.ps1",
+      "size": 1191
+    },
+    {
+      "path": "tt-core/scripts/Stop-Tunnel.cmd",
+      "size": 81
+    },
+    {
+      "path": "tt-core/scripts/Stop-Tunnel.ps1",
+      "size": 430
+    },
+    {
+      "path": "tt-core/scripts/Sync-PublicExposurePolicy.ps1",
+      "size": 1681
+    },
+    {
+      "path": "tt-core/scripts/ttcore.cmd",
+      "size": 76
+    },
+    {
+      "path": "tt-core/scripts/ttcore.ps1",
+      "size": 2975
+    },
+    {
+      "path": "tt-core/scripts/Update-TTCore.cmd",
+      "size": 130
+    },
+    {
+      "path": "tt-core/scripts/Update-TTCore.ps1",
+      "size": 5130
+    },
+    {
+      "path": "tt-core/scripts/Update-TTSupabase.ps1",
+      "size": 789
+    },
+    {
+      "path": "tt-core/scripts/Update-TunnelURLs.cmd",
+      "size": 98
+    },
+    {
+      "path": "tt-core/scripts/Update-TunnelURLs.ps1",
+      "size": 6883
+    },
+    {
+      "path": "tt-core/scripts-linux/apply-profile.sh",
+      "size": 7693
+    },
+    {
+      "path": "tt-core/scripts-linux/backup-offsite.sh",
+      "size": 5961
+    },
+    {
+      "path": "tt-core/scripts-linux/backup.sh",
+      "size": 10026
+    },
+    {
+      "path": "tt-core/scripts-linux/bump-version.sh",
+      "size": 4223
+    },
+    {
+      "path": "tt-core/scripts-linux/cleanup-backups.sh",
+      "size": 3567
+    },
+    {
+      "path": "tt-core/scripts-linux/health-dashboard.sh",
+      "size": 9007
+    },
+    {
+      "path": "tt-core/scripts-linux/init.sh",
+      "size": 13126
+    },
+    {
+      "path": "tt-core/scripts-linux/lib/runtime-env.sh",
+      "size": 1477
+    },
+    {
+      "path": "tt-core/scripts-linux/lock-image-digests.sh",
+      "size": 9854
+    },
+    {
+      "path": "tt-core/scripts-linux/migrate-to-sops.sh",
+      "size": 7122
+    },
+    {
+      "path": "tt-core/scripts-linux/monitor.sh",
+      "size": 6584
+    },
+    {
+      "path": "tt-core/scripts-linux/preflight-check.sh",
+      "size": 20244
+    },
+    {
+      "path": "tt-core/scripts-linux/preflight-supabase.sh",
+      "size": 2332
+    },
+    {
+      "path": "tt-core/scripts-linux/README.md",
+      "size": 3263
+    },
+    {
+      "path": "tt-core/scripts-linux/restore.sh",
+      "size": 12816
+    },
+    {
+      "path": "tt-core/scripts-linux/rollback.sh",
+      "size": 13076
+    },
+    {
+      "path": "tt-core/scripts-linux/rotate-secrets.sh",
+      "size": 6731
+    },
+    {
+      "path": "tt-core/scripts-linux/secrets-strength.sh",
+      "size": 6320
+    },
+    {
+      "path": "tt-core/scripts-linux/setup-backup-schedule.sh",
+      "size": 4921
+    },
+    {
+      "path": "tt-core/scripts-linux/smoke-test.sh",
+      "size": 8178
+    },
+    {
+      "path": "tt-core/scripts-linux/start-core.sh",
+      "size": 3823
+    },
+    {
+      "path": "tt-core/scripts-linux/start-tunnel.sh",
+      "size": 927
+    },
+    {
+      "path": "tt-core/scripts-linux/start.sh",
+      "size": 451
+    },
+    {
+      "path": "tt-core/scripts-linux/status.sh",
+      "size": 2466
+    },
+    {
+      "path": "tt-core/scripts-linux/stop-core.sh",
+      "size": 578
+    },
+    {
+      "path": "tt-core/scripts-linux/support-bundle.sh",
+      "size": 5809
+    },
+    {
+      "path": "tt-core/scripts-linux/ttcore.sh",
+      "size": 6719
+    },
+    {
+      "path": "tt-core/scripts-linux/update-tunnel-urls.sh",
+      "size": 4823
+    },
+    {
+      "path": "tt-core/scripts-linux/validate-deployment.sh",
+      "size": 12580
+    },
+    {
+      "path": "tt-core/scripts-linux/validate-sops.sh",
+      "size": 3434
+    },
+    {
+      "path": "tt-core/scripts-linux/verify-restore.sh",
+      "size": 10268
+    },
+    {
+      "path": "tt-core/scripts-linux/verify-security-ack.sh",
+      "size": 4308
+    },
+    {
+      "path": "tt-core/secrets/.sops.yaml",
+      "size": 327
+    },
+    {
+      "path": "tt-core/secrets/README.md",
+      "size": 1589
+    },
+    {
+      "path": "tt-core/templates/addon.readme.template.md",
+      "size": 319
+    },
+    {
+      "path": "tt-core/templates/addon.service.template.yml",
+      "size": 1144
+    },
+    {
+      "path": "tt-core/templates/env.addon.template.env",
+      "size": 204
+    },
+    {
+      "path": "tt-core/templates/tunnel.route.snippet.yml",
+      "size": 332
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/docker-compose.yml",
+      "size": 16700
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/volumes/api/kong.yml",
+      "size": 451
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/volumes/api/kong.yml.tpl",
+      "size": 8910
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/volumes/functions/main/index.ts",
+      "size": 2037
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/volumes/logs/vector.toml",
+      "size": 2168
+    },
+    {
+      "path": "tt-supabase/compose/tt-supabase/volumes/pooler/pooler.exs",
+      "size": 54
+    },
+    {
+      "path": "tt-supabase/contract/integration.json",
+      "size": 1152
+    },
+    {
+      "path": "tt-supabase/docs/BACKUP.md",
+      "size": 394
+    },
+    {
+      "path": "tt-supabase/docs/CREDENTIAL_ROTATION.md",
+      "size": 4873
+    },
+    {
+      "path": "tt-supabase/docs/PORTS.md",
+      "size": 306
+    },
+    {
+      "path": "tt-supabase/docs/QA.md",
+      "size": 345
+    },
+    {
+      "path": "tt-supabase/docs/QUICKSTART.md",
+      "size": 4064
+    },
+    {
+      "path": "tt-supabase/docs/SECURITY.md",
+      "size": 241
+    },
+    {
+      "path": "tt-supabase/docs/UPGRADE.md",
+      "size": 168
+    },
+    {
+      "path": "tt-supabase/env/tt-supabase.env.example",
+      "size": 6603
+    },
+    {
+      "path": "tt-supabase/INDEX.md",
+      "size": 205
+    },
+    {
+      "path": "tt-supabase/README.md",
+      "size": 994
+    },
+    {
+      "path": "tt-supabase/release/CHANGELOG.md",
+      "size": 1345
+    },
+    {
+      "path": "tt-supabase/release/manifest.json",
+      "size": 626
+    },
+    {
+      "path": "tt-supabase/scripts/logs.ps1",
+      "size": 343
+    },
+    {
+      "path": "tt-supabase/scripts/smoke-test.ps1",
+      "size": 613
+    },
+    {
+      "path": "tt-supabase/scripts/start.ps1",
+      "size": 379
+    },
+    {
+      "path": "tt-supabase/scripts/status.ps1",
+      "size": 288
+    },
+    {
+      "path": "tt-supabase/scripts/stop.ps1",
+      "size": 256
+    },
+    {
+      "path": "tt-supabase/scripts-linux/backup.sh",
+      "size": 7424
+    },
+    {
+      "path": "tt-supabase/scripts-linux/init.sh",
+      "size": 6921
+    },
+    {
+      "path": "tt-supabase/scripts-linux/preflight.sh",
+      "size": 1749
+    },
+    {
+      "path": "tt-supabase/scripts-linux/restore.sh",
+      "size": 3575
+    },
+    {
+      "path": "tt-supabase/scripts-linux/rollback.sh",
+      "size": 3405
+    },
+    {
+      "path": "tt-supabase/scripts-linux/rotate-secrets.sh",
+      "size": 3980
+    },
+    {
+      "path": "tt-supabase/scripts-linux/smoke-test.sh",
+      "size": 872
+    },
+    {
+      "path": "tt-supabase/scripts-linux/start.sh",
+      "size": 617
+    },
+    {
+      "path": "tt-supabase/scripts-linux/status.sh",
+      "size": 536
+    },
+    {
+      "path": "tt-supabase/scripts-linux/stop.sh",
+      "size": 441
+    },
+    {
+      "path": "release/bundle-manifest.json",
+      "size": 21744
+    }
+  ]
+}

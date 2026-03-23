@@ -1,0 +1,31 @@
+# Kanboard Addon — TT-Production v14.0
+services:
+  kanboard:
+    container_name: tt-addon-kanboard
+  image: kanboard/kanboard:v1.2.44
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    environment:
+      DATABASE_URL:         postgres://${TT_KANBOARD_DB_USER}:${TT_KANBOARD_DB_PASSWORD}@postgres:5432/${TT_KANBOARD_DB}
+      KANBOARD_ADMIN_PASSWORD: ${TT_KANBOARD_ADMIN_PASSWORD}
+    ports:
+      - "${TT_BIND_IP}:${TT_KANBOARD_HOST_PORT}:80"
+    volumes:
+      - ./volumes/kanboard/data:/var/www/app/data
+      - ./volumes/kanboard/plugins:/var/www/app/plugins
+    depends_on:
+      db-provisioner:
+        condition: service_completed_successfully
+    networks:
+      - tt_core_internal
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"

@@ -1,0 +1,220 @@
+{
+  "_schema": "tt-validation-matrix/v1",
+  "_generator": "tt-core/scripts-linux/validate-deployment.sh",
+  "generated_at": "2026-03-14T18:14:50Z",
+  "tt_version": "v14.0",
+  "overall_result": "PASS",
+  "total_duration_ms": 32776,
+  "services": [
+    {
+      "service": "n8n",
+      "kind": "core",
+      "enabled": true,
+      "probe_type": "http_200",
+      "probe_endpoint": "http://localhost:${TT_N8N_HOST_PORT:-5678}/healthz",
+      "status": "PASS",
+      "duration_ms": 359,
+      "message": "connected",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "pgadmin",
+      "kind": "core",
+      "enabled": true,
+      "probe_type": "docker_healthy",
+      "probe_endpoint": "tt-core-pgadmin",
+      "status": "PASS",
+      "duration_ms": 3350,
+      "message": "healthy",
+      "exposure_class": "protected-admin"
+    },
+    {
+      "service": "postgres",
+      "kind": "core",
+      "enabled": true,
+      "probe_type": "docker_healthy",
+      "probe_endpoint": "tt-core-postgres",
+      "status": "PASS",
+      "duration_ms": 3393,
+      "message": "healthy",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "redis",
+      "kind": "core",
+      "enabled": true,
+      "probe_type": "docker_healthy",
+      "probe_endpoint": "tt-core-redis",
+      "status": "PASS",
+      "duration_ms": 3324,
+      "message": "healthy",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "redisinsight",
+      "kind": "core",
+      "enabled": true,
+      "probe_type": "docker_healthy",
+      "probe_endpoint": "tt-core-redisinsight",
+      "status": "PASS",
+      "duration_ms": 3394,
+      "message": "healthy",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "metabase",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "kanboard",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "wordpress",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "mariadb",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "qdrant",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "ollama",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "openwebui",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "uptime-kuma",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "portainer",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "protected-admin"
+    },
+    {
+      "service": "openclaw",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "protected-admin"
+    },
+    {
+      "service": "minio",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "customer-facing"
+    },
+    {
+      "service": "pgbouncer",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "prometheus",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "never-exposed"
+    },
+    {
+      "service": "grafana",
+      "kind": "addon",
+      "enabled": false,
+      "probe_type": "NONE",
+      "probe_endpoint": null,
+      "status": "SKIPPED",
+      "duration_ms": 0,
+      "message": "service not enabled",
+      "exposure_class": "restricted-admin"
+    }
+  ],
+  "policy_violations": []
+}

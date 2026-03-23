@@ -1,0 +1,29 @@
+# Portainer Addon — TT-Production v14.0
+# SECURITY WARNING: Portainer has direct Docker socket access (effectively root on host).
+# This addon MUST be protected by Cloudflare Access policy (restricted_admin tier).
+# NEVER expose Portainer to tt_shared_net without Cloudflare Access in front of it.
+services:
+  portainer:
+    container_name: tt-addon-portainer
+    image: portainer/portainer-ce:2.39.0-alpine
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    ports:
+      - "${TT_BIND_IP}:${TT_PORTAINER_HOST_PORT}:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./volumes/portainer/data:/data
+    networks:
+      - tt_shared_net
+    # NOTE: Docker socket access inherently bypasses user-space privilege controls.
+    # no-new-privileges applied but note socket access = effective host root.
+    security_opt:
+      - "no-new-privileges:true"

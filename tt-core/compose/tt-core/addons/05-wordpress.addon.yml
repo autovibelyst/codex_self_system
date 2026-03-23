@@ -1,0 +1,63 @@
+# WordPress Addon — TT-Production v14.0
+# Usage: docker compose -f docker-compose.yml -f addons/05-wordpress.addon.yml up -d
+services:
+  wordpress:
+    container_name: tt-addon-wordpress
+    image: wordpress:6.7.2-php8.3-apache
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    depends_on:
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST:     mariadb:3306
+      WORDPRESS_DB_USER:     ${TT_WP_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${TT_WP_DB_PASSWORD}
+      WORDPRESS_DB_NAME:     ${TT_WP_DB_NAME}
+    ports:
+      - "${TT_BIND_IP}:${TT_WORDPRESS_HOST_PORT}:80"
+    volumes:
+      - ./volumes/wordpress/html:/var/www/html
+    networks:
+      - tt_core_internal
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"
+
+  mariadb:
+    container_name: tt-addon-mariadb
+    image: mariadb:11.8.6
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+    environment:
+      MYSQL_ROOT_PASSWORD: ${TT_WP_ROOT_PASSWORD}
+      MYSQL_DATABASE:      ${TT_WP_DB_NAME}
+      MYSQL_USER:          ${TT_WP_DB_USER}
+      MYSQL_PASSWORD:      ${TT_WP_DB_PASSWORD}
+    volumes:
+      - ./volumes/mariadb/data:/var/lib/mysql
+    networks:
+      - tt_core_internal
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    security_opt:
+      - "no-new-privileges:true"

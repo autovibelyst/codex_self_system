@@ -1,0 +1,37 @@
+# TT-Production v14.0 — Qdrant Vector Database Addon
+# High-performance vector search for RAG (Retrieval Augmented Generation).
+# Local-only by default. API key required.
+name: tt-core
+
+services:
+  qdrant:
+    container_name: tt-core-qdrant
+    image: qdrant/qdrant:v1.9.2
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: { max-size: 50m, max-file: "3" }
+    deploy:
+      resources:
+        limits:       { memory: 2g }
+        reservations: { memory: 256m }
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      QDRANT__SERVICE__API_KEY: ${TT_QDRANT_API_KEY}
+      TZ:                       ${TT_TZ}
+    ports:
+      - "${TT_BIND_IP}:6333:6333"
+      - "${TT_BIND_IP}:6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - tt_core_internal         # local-only by design; no public tunnel
+    healthcheck:
+      test:     ["CMD", "curl", "-f", "http://localhost:6333/readyz"]
+      interval: 15s
+      timeout:  10s
+      retries:  5
+      start_period: 30s
+
+volumes:
+  qdrant_data:

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tt-image-inventory/v1",
+  "title": "TT-Production Image Inventory Lock",
+  "type": "object",
+  "required": ["_schema","_generator","generated_at","tt_version","images","lock_status"],
+  "properties": {
+    "_schema":         { "type": "string", "const": "tt-image-inventory/v1" },
+    "_generator":      { "type": "string" },
+    "generated_at":    { "type": "string", "format": "date-time" },
+    "tt_version":      { "type": "string" },
+    "lock_status":     { "type": "string", "enum": ["complete","partial","empty"] },
+    "unresolved_count":{ "type": "integer" },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["image_ref","source_tag","resolved_digest","digest_status","scope","compose_file","service_name"],
+        "properties": {
+          "image_ref":           { "type": "string" },
+          "source_tag":          { "type": "string" },
+          "resolved_digest":     { "type": ["string","null"] },
+          "digest_status":       { "type": "string", "enum": ["resolved","unresolved","skipped"] },
+          "scope":               { "type": "string", "enum": ["core","addon","tunnel","companion"] },
+          "profile_dependency":  { "type": ["string","null"] },
+          "compose_file":        { "type": "string" },
+          "service_name":        { "type": "string" },
+          "locked_at":           { "type": ["string","null"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+name: CI Gate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  ci-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run strict CI gate
+        run: bash release/ci-gate.sh --strict

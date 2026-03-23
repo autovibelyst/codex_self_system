@@ -1,0 +1,38 @@
+# TT-Production v14.0 — PgBouncer Connection Pooler Addon
+# Provides connection pooling in front of PostgreSQL.
+# Prevents connection exhaustion under high load.
+name: tt-core
+
+services:
+  pgbouncer:
+    container_name: tt-core-pgbouncer
+    image: edoburu/pgbouncer:1.22.1-p0
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: { max-size: 20m, max-file: "3" }
+    deploy:
+      resources:
+        limits:       { memory: 256m }
+        reservations: { memory: 32m }
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    environment:
+      DB_USER:         ${TT_POSTGRES_USER}
+      DB_PASSWORD:     ${TT_POSTGRES_PASSWORD}
+      DB_HOST:         postgres
+      DB_PORT:         "5432"
+      POOL_MODE:       transaction
+      MAX_CLIENT_CONN: "500"
+      DEFAULT_POOL_SIZE: "20"
+      TZ:              ${TT_TZ}
+    healthcheck:
+      test:     ["CMD-SHELL", "pg_isready -h localhost -p 5432 || exit 1"]
+      interval: 10s
+      timeout:  5s
+      retries:  5
+    networks:
+      - tt_core_internal
+    depends_on:
+      postgres:
+        condition: service_healthy

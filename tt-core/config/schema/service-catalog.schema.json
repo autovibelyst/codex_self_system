@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tt-production/schemas/service-catalog.schema.json",
+  "title": "TT-Core Service Catalog",
+  "description": "Schema for tt-core/config/service-catalog.json — the canonical service metadata authority.",
+  "type": "object",
+  "required": ["services", "version", "updated"],
+  "properties": {
+    "_comment": { "type": "string" },
+    "version":  { "type": "string", "pattern": "^v\\d+\\.\\d+(\\.\\d+)?$" },
+    "updated":  { "type": "string", "description": "Date this catalog was last updated (YYYY-MM-DD)" },
+    "services": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/ServiceEntry" }
+    }
+  },
+  "definitions": {
+    "ServiceEntry": {
+      "type": "object",
+      "required": ["service", "compose_service", "kind", "tier", "public_capable", "auto_start_tunnel", "display_name"],
+      "additionalProperties": false,
+      "properties": {
+        "service":         { "type": "string", "description": "Unique service identifier" },
+        "compose_service": { "type": "string", "description": "Docker Compose service name" },
+        "kind":            { "type": "string", "enum": ["core", "addon"], "description": "core = always-on; addon = profile-gated" },
+        "profile":         { "type": ["string", "null"], "description": "Docker Compose profile name (null for core services)" },
+        "additional_profiles": { "type": "array", "items": { "type": "string" }, "description": "Extra profiles required alongside primary profile" },
+        "tier": {
+          "type": "string",
+          "enum": ["local_only", "restricted_admin", "public_app"],
+          "description": "local_only: never exposed; restricted_admin: admin surface, requires explicit ack; public_app: safe for tunnel"
+        },
+        "public_capable":    { "type": "boolean", "description": "Can this service be exposed via Cloudflare Tunnel?" },
+        "auto_start_tunnel": { "type": "boolean", "description": "Default tunnel route state (true = enabled by default)" },
+        "display_name":      { "type": "string",  "description": "Human-readable display name" },
+        "route_name":        { "type": "string",  "description": "Route key used in services.select.json tunnel.routes" },
+        "requires_explicit_ack": { "type": "boolean", "description": "If true, security.allow_restricted_admin_tunnel_routes must be true to expose via tunnel" },
+        "tunnel": {
+          "type": "object",
+          "description": "Tunnel configuration metadata (only for public_capable services)",
+          "required": ["toggle", "subdomain_var", "placeholder", "rule_key"],
+          "additionalProperties": false,
+          "properties": {
+            "toggle":        { "type": "string", "description": "Env var that enables this route (legacy compat)" },
+            "subdomain_var": { "type": "string", "description": "Env var for subdomain override (legacy compat)" },
+            "placeholder":   { "type": "string", "description": "Template placeholder in cloudflared config" },
+            "rule_key":      { "type": "string", "description": "Rule key for route generation" }
+          }
+        },
+        "health": {
+          "type": "object",
+          "description": "Health probe configuration for smoke tests",
+          "required": ["port_env", "probe_path", "expected_codes"],
+          "additionalProperties": false,
+          "properties": {
+            "port_env":       { "type": "string",  "description": "Env var holding host port" },
+            "probe_path":     { "type": "string",  "description": "HTTP path to probe" },
+            "expected_codes": { "type": "array", "items": { "type": "integer" }, "description": "Acceptable HTTP response codes" },
+            "probe_required": { "type": "boolean", "description": "If false, probe failure is non-blocking in smoke tests" },
+            "probe_skip_unless_env": { "type": "string", "description": "Skip probe unless this env var/value is set" }
+          }
+        }
+      }
+    }
+  }
+}
+

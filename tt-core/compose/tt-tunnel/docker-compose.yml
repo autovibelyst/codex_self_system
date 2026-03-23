@@ -1,0 +1,41 @@
+# TT-Tunnel — Cloudflare Tunnel — TT-Production v14.0
+# Version: TT-Production v14.0
+name: tt-tunnel
+
+networks:
+  tt_shared_net:
+    name: tt_shared_net
+    external: true
+
+services:
+  cloudflared:
+    container_name: tt-tunnel-cloudflared
+    image: cloudflare/cloudflared:2025.2.1
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+        reservations:
+          memory: 64m
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CF_TUNNEL_TOKEN}
+    volumes:
+      - ./cloudflared-health.sh:/usr/local/bin/cloudflared-health.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "/bin/sh /usr/local/bin/cloudflared-health.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    networks:
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"
+

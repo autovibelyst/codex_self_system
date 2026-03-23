@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "tt-security-ack/v1",
+  "title": "TT-Production Security Acknowledgment",
+  "type": "object",
+  "required": ["_schema","operator_name","operator_email","hostname","acknowledged_at","services_acknowledged","signature"],
+  "properties": {
+    "_schema":              { "type": "string", "const": "tt-security-ack/v1" },
+    "operator_name":        { "type": "string", "minLength": 2 },
+    "operator_email":       { "type": "string", "format": "email" },
+    "hostname":             { "type": "string", "minLength": 3 },
+    "acknowledged_at":      { "type": "string", "format": "date-time" },
+    "acknowledged_risks":   { "type": "array", "items": { "type": "string" } },
+    "services_acknowledged":{ "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "signature":            { "type": "string", "minLength": 64 }
+  }
+}

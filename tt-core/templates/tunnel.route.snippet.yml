@@ -1,0 +1,8 @@
+# Add to ingress.template.yml (per service route)
+# Replace <service>, <subdomain>, <local_port>
+#
+# - If NO_TUNNEL_<SERVICE>=1 => skip generating this route
+#
+# <subdomain>.<DOMAIN>:
+#   service: http://host.docker.internal:<local_port>
+#   # or: http://tt-core-<service>:<container_port> (if tunnel container is on tt_shared_net)

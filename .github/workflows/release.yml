@@ -1,0 +1,51 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Build release bundle
+        run: bash release/make-release.sh --root "$GITHUB_WORKSPACE" --out "$GITHUB_WORKSPACE/dist"
+
+      - name: Read bundle metadata
+        run: |
+          BUNDLE_NAME="$(python3 -c 'import json; print(json.load(open("release/version.json", encoding="utf-8"))["bundle_name"])')"
+          echo "BUNDLE_NAME=${BUNDLE_NAME}" >> "$GITHUB_ENV"
+
+      - name: Validate source release
+        shell: pwsh
+        run: ./tt-core/release/validate-release.ps1
+
+      - name: Validate exported bundle
+        shell: pwsh
+        run: ./release/validate-bundle.ps1 -Root "./dist/$env:BUNDLE_NAME"
+
+      - name: Package zip and checksum
+        run: |
+          cd dist
+          zip -r "${BUNDLE_NAME}.zip" "${BUNDLE_NAME}"
+          sha256sum "${BUNDLE_NAME}.zip" > "${BUNDLE_NAME}.zip.sha256"
+
+      - name: Publish GitHub Release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/${{ env.BUNDLE_NAME }}.zip
+            dist/${{ env.BUNDLE_NAME }}.zip.sha256

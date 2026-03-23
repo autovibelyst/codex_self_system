@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://tt-production/schemas/services.select.schema.json",
+  "title": "TT-Core Service Selection",
+  "description": "Schema for tt-core/config/services.select.json — the canonical operator intent authority for service enablement and exposure.",
+  "type": "object",
+  "required": ["meta", "client", "core", "profiles", "tunnel", "backup", "security"],
+  "properties": {
+    "_comment": { "type": "string" },
+    "_docs":    { "type": "string" },
+    "_usage":   { "type": "string" },
+    "meta": {
+      "type": "object",
+      "description": "Installation metadata — written by Init-TTCore.ps1, not operator-configurable",
+      "required": ["package_version"],
+      "properties": {
+        "_comment":       { "type": "string" },
+        "package_version":  { "type": "string", "pattern": "^v\\d+\\.\\d+\\.\\d+$" },
+        "installed_at":     { "type": "string" },
+        "installed_by":     { "type": "string" },
+        "last_updated_at":  { "type": "string" },
+        "last_updated_by":  { "type": "string" }
+      }
+    },
+    "client": {
+      "type": "object",
+      "description": "Client-specific values — operator MUST fill these",
+      "required": ["name", "domain", "timezone", "bind_ip"],
+      "properties": {
+        "name":     { "type": "string", "description": "Client/deployment name" },
+        "domain":   { "type": "string", "description": "Cloudflare domain for tunnel routes (e.g. example.com)" },
+        "timezone": { "type": "string", "description": "TZ database name (e.g. Asia/Riyadh)" },
+        "bind_ip":  { "type": "string", "description": "127.0.0.1 for local-only; 0.0.0.0 for LAN" }
+      }
+    },
+    "core": {
+      "type": "object",
+      "description": "Core services — always true for standard TT-Core installs",
+      "properties": {
+        "_comment":    { "type": "string" },
+        "postgres":    { "type": "boolean" },
+        "redis":       { "type": "boolean" },
+        "n8n":         { "type": "boolean" },
+        "pgadmin":     { "type": "boolean" },
+        "redisinsight":{ "type": "boolean" }
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "description": "Optional addon profiles — set to true to enable",
+      "properties": {
+        "metabase":   { "type": "boolean" },
+        "monitoring": { "type": "boolean" },
+        "wordpress":  { "type": "boolean" },
+        "kanboard":   { "type": "boolean" },
+        "qdrant":     { "type": "boolean" },
+        "ollama":     { "type": "boolean" },
+        "openwebui":  { "type": "boolean" },
+        "portainer":  { "type": "boolean" },
+        "openclaw":   { "type": "boolean" }
+      }
+    },
+    "tunnel": {
+      "type": "object",
+      "description": "Tunnel configuration — source of truth for route intent",
+      "required": ["enabled", "routes", "subdomains"],
+      "properties": {
+        "enabled": { "type": "boolean", "description": "Master tunnel enable/disable" },
+        "_token_note": { "type": "string" },
+        "routes": {
+          "type": "object",
+          "description": "Per-service route enablement. Keys must match route_name in service-catalog.json",
+          "properties": {
+            "_comment":  { "type": "string" },
+            "n8n":        { "type": "boolean" },
+            "metabase":   { "type": "boolean" },
+            "wordpress":  { "type": "boolean" },
+            "pgadmin":    { "type": "boolean" },
+            "kanboard":   { "type": "boolean" },
+            "openwebui":  { "type": "boolean" },
+            "monitoring": { "type": "boolean" },
+            "portainer":  { "type": "boolean" },
+            "openclaw":   { "type": "boolean" }
+          }
+        },
+        "subdomains": {
+          "type": "object",
+          "description": "Subdomain overrides. Key must match route_name. Value = subdomain prefix (not full domain).",
+          "properties": {
+            "n8n":        { "type": "string" },
+            "metabase":   { "type": "string" },
+            "wordpress":  { "type": "string" },
+            "pgadmin":    { "type": "string" },
+            "kanboard":   { "type": "string" },
+            "openwebui":  { "type": "string" },
+            "monitoring": { "type": "string" },
+            "portainer":  { "type": "string" },
+            "openclaw":   { "type": "string" }
+          }
+        }
+      }
+    },
+    "backup": {
+      "type": "object",
+      "description": "Backup schedule configuration",
+      "properties": {
+        "auto_schedule":     { "type": "boolean" },
+        "retain_days":       { "type": "integer", "minimum": 1 },
+        "backup_time":       { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+        "notify_on_failure": { "type": "boolean" },
+        "notify_webhook_url":{ "type": "string" }
+      }
+    },
+    "security": {
+      "type": "object",
+      "description": "Security policy overrides",
+      "required": ["allow_restricted_admin_tunnel_routes"],
+      "properties": {
+        "allow_restricted_admin_tunnel_routes": {
+          "type": "boolean",
+          "description": "DANGEROUS: Set true only if you explicitly acknowledge exposing restricted admin surfaces (pgAdmin, Portainer, OpenClaw) via Cloudflare Access."
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

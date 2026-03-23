@@ -1,0 +1,491 @@
+# TT-Core — Docker Compose Stack — TT-Production v14.0
+# Version: TT-Production v14.0
+# DO NOT EDIT generated environment values. Edit tt-core/env/.env.example and re-run init.
+name: tt-core
+
+networks:
+  tt_shared_net:
+    name: tt_shared_net
+    driver: bridge
+  tt_core_internal:
+    name: tt_core_internal
+    driver: bridge
+    internal: true
+  tt_admin_net:
+    name: tt_admin_net
+    driver: bridge
+    internal: true
+  tt_analytics_net:
+    name: tt_analytics_net
+    driver: bridge
+    internal: true
+
+services:
+  # ── PostgreSQL ───────────────────────────────────────────────────────────────
+  postgres:
+    container_name: tt-core-postgres
+    image: postgres:16.6-alpine
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 256m
+    environment:
+      POSTGRES_USER:     ${TT_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${TT_POSTGRES_PASSWORD}
+      POSTGRES_DB:       ${TT_POSTGRES_DB:-ttcore}
+      TZ:                ${TT_TZ}
+    command:
+      - postgres
+      - -c
+      - shared_buffers=${TT_PG_SHARED_BUFFERS:-256MB}
+      - -c
+      - max_connections=${TT_PG_MAX_CONNECTIONS:-200}
+      - -c
+      - work_mem=${TT_PG_WORK_MEM:-4MB}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${TT_POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    ports:
+      - "${TT_BIND_IP}:${TT_POSTGRES_HOST_PORT}:5432"
+    volumes:
+      - ./volumes/postgres/data:/var/lib/postgresql/data
+    networks:
+      - tt_core_internal
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── DB Provisioner ───────────────────────────────────────────────────────────
+  db-provisioner:
+    container_name: tt-core-db-provisioner
+    image: postgres:16.6-alpine
+    restart: "no"
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "2"
+    deploy:
+      resources:
+        limits:
+          memory: 128m
+        reservations:
+          memory: 32m
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGHOST:                  postgres
+      PGPORT:                  5432
+      PGUSER:                  ${TT_POSTGRES_USER}
+      PGPASSWORD:              ${TT_POSTGRES_PASSWORD}
+      TT_N8N_DB:               ${TT_N8N_DB}
+      TT_N8N_DB_USER:          ${TT_N8N_DB_USER}
+      TT_N8N_DB_PASSWORD:      ${TT_N8N_DB_PASSWORD}
+      TT_METABASE_DB:          ${TT_METABASE_DB}
+      TT_METABASE_DB_USER:     ${TT_METABASE_DB_USER}
+      TT_METABASE_DB_PASSWORD: ${TT_METABASE_DB_PASSWORD}
+      TT_KANBOARD_DB:          ${TT_KANBOARD_DB}
+      TT_KANBOARD_DB_USER:     ${TT_KANBOARD_DB_USER}
+      TT_KANBOARD_DB_PASSWORD: ${TT_KANBOARD_DB_PASSWORD}
+      TZ:                      ${TT_TZ}
+    volumes:
+      - ./volumes/postgres/init:/docker-entrypoint-initdb.d:ro
+    command: >
+      sh -ec "
+        echo 'TT-Core db-provisioner: provisioning per-service databases...'
+        for i in $(seq 1 30); do
+          pg_isready -h postgres -p 5432 -U $$PGUSER && break
+          echo \"TT-Core db-provisioner: waiting for postgres ($$i/30)...\"
+          sleep 2
+        done
+        pg_isready -h postgres -p 5432 -U $$PGUSER
+        sh /docker-entrypoint-initdb.d/00-tt-core-init.sh
+        echo 'TT-Core db-provisioner: done.'
+      "
+    networks:
+      - tt_core_internal
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── Redis ────────────────────────────────────────────────────────────────────
+  redis:
+    container_name: tt-core-redis
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+        reservations:
+          memory: 64m
+    command:
+      - redis-server
+      - /usr/local/etc/redis/redis.conf
+      - --requirepass
+      - ${TT_REDIS_PASSWORD}
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+      - --auto-aof-rewrite-percentage
+      - "100"
+      - --auto-aof-rewrite-min-size
+      - 64mb
+      - --save
+      - ""
+    environment:
+      TZ:               ${TT_TZ}
+      TT_REDIS_PASSWORD: ${TT_REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "REDISCLI_AUTH=$$TT_REDIS_PASSWORD redis-cli ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    ports:
+      - "${TT_BIND_IP}:${TT_REDIS_HOST_PORT}:6379"
+    volumes:
+      - ./volumes/redis/data:/data
+      - ./volumes/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+    networks:
+      - tt_core_internal
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── n8n ──────────────────────────────────────────────────────────────────────
+  n8n:
+    container_name: tt-core-n8n
+    image: n8nio/n8n:1.88.0
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+    depends_on:
+      db-provisioner:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    environment:
+      TZ:                       ${TT_TZ}
+      N8N_HOST:                 ${TT_N8N_HOST:-localhost}
+      N8N_PORT:                 5678
+      N8N_PROTOCOL:             ${TT_N8N_PROTOCOL:-http}
+      WEBHOOK_URL:              ${TT_N8N_WEBHOOK_URL}
+      N8N_EDITOR_BASE_URL:      ${TT_N8N_EDITOR_BASE_URL}
+      N8N_DIAGNOSTICS_ENABLED:  "false"
+      N8N_PERSONALIZATION_ENABLED: "false"
+      N8N_ENCRYPTION_KEY:       ${TT_N8N_ENCRYPTION_KEY}
+      DB_TYPE:                  postgresdb
+      DB_POSTGRESDB_HOST:       postgres
+      DB_POSTGRESDB_PORT:       5432
+      DB_POSTGRESDB_DATABASE:   ${TT_N8N_DB}
+      DB_POSTGRESDB_USER:       ${TT_N8N_DB_USER}
+      DB_POSTGRESDB_PASSWORD:   ${TT_N8N_DB_PASSWORD}
+      EXECUTIONS_MODE:          ${TT_N8N_EXECUTIONS_MODE:-queue}
+      QUEUE_BULL_REDIS_HOST:    redis
+      QUEUE_BULL_REDIS_PORT:    6379
+      QUEUE_BULL_REDIS_PASSWORD: ${TT_REDIS_PASSWORD}
+      N8N_QUEUE_BULL_REDIS_DB:  0
+      # ── SMTP (Email) ───────────────────────────────────────────────────────
+      # Leave TT_SMTP_HOST empty in .env to disable. n8n skips SMTP silently.
+      N8N_SMTP_HOST:    ${TT_SMTP_HOST:-}
+      N8N_SMTP_PORT:    ${TT_SMTP_PORT:-587}
+      N8N_SMTP_USER:    ${TT_SMTP_USER:-}
+      N8N_SMTP_PASS:    ${TT_SMTP_PASSWORD:-}
+      N8N_SMTP_SENDER:  ${TT_SMTP_FROM:-}
+      N8N_SMTP_SSL:     ${TT_SMTP_SECURE:-false}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5678/healthz 2>/dev/null | grep -q ok || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    ports:
+      - "${TT_BIND_IP}:${TT_N8N_HOST_PORT}:5678"
+    volumes:
+      - ./volumes/n8n:/home/node/.n8n
+    networks:
+      - tt_core_internal
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── n8n Worker ───────────────────────────────────────────────────────────────
+  n8n-worker:
+    container_name: tt-core-n8n-worker
+    image: n8nio/n8n:1.88.0
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+    depends_on:
+      n8n:
+        condition: service_healthy
+    environment:
+      TZ:                       ${TT_TZ}
+      N8N_ENCRYPTION_KEY:       ${TT_N8N_ENCRYPTION_KEY}
+      DB_TYPE:                  postgresdb
+      DB_POSTGRESDB_HOST:       postgres
+      DB_POSTGRESDB_PORT:       5432
+      DB_POSTGRESDB_DATABASE:   ${TT_N8N_DB}
+      DB_POSTGRESDB_USER:       ${TT_N8N_DB_USER}
+      DB_POSTGRESDB_PASSWORD:   ${TT_N8N_DB_PASSWORD}
+      EXECUTIONS_MODE:          queue
+      QUEUE_BULL_REDIS_HOST:    redis
+      QUEUE_BULL_REDIS_PORT:    6379
+      QUEUE_BULL_REDIS_PASSWORD: ${TT_REDIS_PASSWORD}
+      N8N_QUEUE_BULL_REDIS_DB:  0
+      # ── SMTP (inherited from n8n) ─────────────────────────────────────────
+      N8N_SMTP_HOST:    ${TT_SMTP_HOST:-}
+      N8N_SMTP_PORT:    ${TT_SMTP_PORT:-587}
+      N8N_SMTP_USER:    ${TT_SMTP_USER:-}
+      N8N_SMTP_PASS:    ${TT_SMTP_PASSWORD:-}
+      N8N_SMTP_SENDER:  ${TT_SMTP_FROM:-}
+      N8N_SMTP_SSL:     ${TT_SMTP_SECURE:-false}
+    command: worker
+    healthcheck:
+      test: ["CMD-SHELL", "ps -ef | grep -q '[n]8n worker' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+    volumes:
+      - ./volumes/n8n:/home/node/.n8n
+    networks:
+      - tt_core_internal
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── pgAdmin ──────────────────────────────────────────────────────────────────
+  pgadmin:
+    container_name: tt-core-pgadmin
+    image: dpage/pgadmin4:8.14
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+        reservations:
+          memory: 128m
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PGADMIN_DEFAULT_EMAIL:                ${TT_PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD:             ${TT_PGADMIN_PASSWORD}
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "True"
+      PGADMIN_CONFIG_LOGIN_BANNER:          "'TT-Core pgAdmin — v14.0'"
+      TZ:                                   ${TT_TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://127.0.0.1:80/login 2>/dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 45s
+    ports:
+      - "${TT_BIND_IP}:${TT_PGADMIN_HOST_PORT}:80"
+    volumes:
+      - ./volumes/pgadmin/data:/var/lib/pgadmin
+      - ./volumes/pgadmin/servers.json:/pgadmin4/servers.json:ro
+    networks:
+      - tt_core_internal
+      - tt_admin_net
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── RedisInsight ─────────────────────────────────────────────────────────────
+  redisinsight:
+    container_name: tt-core-redisinsight
+    image: redis/redisinsight:2.66
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+        reservations:
+          memory: 128m
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      TZ:              ${TT_TZ}
+      RI_APP_PASSWORD: ${TT_REDISINSIGHT_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:5540/api/health >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 20s
+    ports:
+      - "${TT_BIND_IP}:${TT_REDISINSIGHT_HOST_PORT}:5540"
+    volumes:
+      - ./volumes/redisinsight/data:/data
+    networks:
+      - tt_core_internal
+      - tt_admin_net
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── Metabase (Optional — profile: metabase) ──────────────────────────────────
+  metabase:
+    profiles:
+      - metabase
+    container_name: tt-core-metabase
+    image: metabase/metabase:v0.52.9
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+    depends_on:
+      db-provisioner:
+        condition: service_completed_successfully
+    environment:
+      MB_DB_TYPE:   postgres
+      MB_DB_DBNAME: ${TT_METABASE_DB}
+      MB_DB_PORT:   5432
+      MB_DB_USER:   ${TT_METABASE_DB_USER}
+      MB_DB_PASS:   ${TT_METABASE_DB_PASSWORD}
+      MB_DB_HOST:   postgres
+      JAVA_TIMEZONE: ${TT_TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:3000/api/health | grep -q ok"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 90s
+    ports:
+      - "${TT_BIND_IP}:${TT_METABASE_HOST_PORT}:3000"
+    volumes:
+      - ./volumes/metabase/data:/metabase-data
+    networks:
+      - tt_core_internal
+      - tt_analytics_net
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── Qdrant (Optional — profile: qdrant) ─────────────────────────────────────
+  qdrant:
+    profiles:
+      - qdrant
+    container_name: tt-core-qdrant
+    image: qdrant/qdrant:v1.13.4
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 2g
+        reservations:
+          memory: 512m
+    environment:
+      TZ: ${TT_TZ}
+      QDRANT__SERVICE__API_KEY: "${TT_QDRANT_API_KEY:?TT_QDRANT_API_KEY is required — run init.sh}"
+    volumes:
+      - ./volumes/qdrant/storage:/qdrant/storage
+    networks:
+      - tt_core_internal
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://127.0.0.1:6333/health > /dev/null || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+      start_period: 15s
+    # Host port bindings — uncomment to expose on host
+    # ports:
+    #   - "${TT_BIND_IP}:${TT_QDRANT_HOST_PORT}:6333"
+    #   - "${TT_BIND_IP}:${TT_QDRANT_GRPC_PORT}:6334"
+    security_opt:
+      - "no-new-privileges:true"
+
+  # ── Ollama (Optional — profile: ollama | openwebui) ──────────────────────────
+  ollama:
+    profiles:
+      - ollama
+      - openwebui
+    container_name: tt-core-ollama
+    image: ollama/ollama:0.6.5
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 8g
+        reservations:
+          memory: 1g
+    environment:
+      TZ: ${TT_TZ}
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:11434/api/version > /dev/null || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - ./volumes/ollama/models:/root/.ollama
+    networks:
+      - tt_core_internal
+    # NOTE: ollama excluded from no-new-privileges — GPU device access may require elevated ops
+    # Apply manually if GPU is not used: security_opt: ["no-new-privileges:true"]
+    security_opt:
+      - "no-new-privileges:true"
+
+
+

@@ -1,0 +1,47 @@
+# Add-on: <service>
+# File: compose/tt-core/addons/NN-<service>.addon.yml
+# Rules:
+# - profile name MUST match service name
+# - container_name: tt-core-<service> (recommended)
+# - ports MUST bind to 127.0.0.1 by default
+# - persistent data under volumes/<service>/
+
+services:
+  <service>:
+    profiles: ["<service>"]
+    container_name: tt-core-<service>
+    image: <image>
+    restart: unless-stopped
+
+    # Networks:
+    # - tt_shared_net: for core-to-addon comms
+    # - tt_core_internal: internal-only comms
+    networks:
+      - tt_shared_net
+      - tt_core_internal
+
+    # Ports:
+    # Use env-driven host port to avoid conflicts.
+    # Bind to localhost to avoid accidental LAN exposure.
+    ports:
+      - "127.0.0.1:${<SERVICE>_PORT}:<container_port>"
+
+    environment:
+      # Example:
+      # TZ: "Europe/Istanbul"
+      # SOME_SETTING: ${SOME_SETTING}
+      TZ: ${TZ}
+
+    volumes:
+      - "../../volumes/<service>/data:/data"
+
+    # Optional: if it depends on core postgres
+    depends_on:
+      tt-postgres:
+        condition: service_healthy
+
+networks:
+  tt_shared_net:
+    external: true
+  tt_core_internal:
+    external: true

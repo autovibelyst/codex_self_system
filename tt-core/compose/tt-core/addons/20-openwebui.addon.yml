@@ -1,0 +1,28 @@
+# Open WebUI Addon — TT-Production v14.0
+services:
+  openwebui:
+    container_name: tt-addon-openwebui
+    image: ghcr.io/open-webui/open-webui:v0.5.20
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+    ports:
+      - "${TT_BIND_IP}:${TT_OPENWEBUI_HOST_PORT}:8080"
+    volumes:
+      - ./volumes/openwebui/data:/app/backend/data
+    depends_on:
+      - ollama
+    networks:
+      - tt_core_internal
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"

@@ -1,0 +1,15 @@
+{
+  "postgres":     [],
+  "redis":        [],
+  "n8n":          ["postgres", "redis"],
+  "pgadmin":      ["postgres"],
+  "redisinsight": ["redis"],
+  "metabase":     ["postgres"],
+  "mariadb":      [],
+  "wordpress":    ["mariadb"],
+  "kanboard":     ["postgres"],
+  "qdrant":       [],
+  "ollama":       [],
+  "openwebui":    ["ollama"],
+  "openclaw":     ["n8n"]
+}

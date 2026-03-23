@@ -1,0 +1,34 @@
+{
+  "_schema": "tt-integration-contract/v1",
+  "_generator": "manual — maintained by platform engineering",
+  "module": "tt-supabase",
+  "module_version": "13.0.0",
+  "integrates_with": "tt-core",
+  "min_tt_core_version": "13.0.0",
+  "support_boundary": "tt-supabase issues are NOT covered under tt-core support SLA",
+  "integration_points": [
+    {
+      "id": "shared_network_optional",
+      "type": "docker_network",
+      "network_name": "tt_shared_net",
+      "direction": "tt-supabase joins tt_shared_net for tunnel exposure",
+      "required": false,
+      "note": "Only needed if you want Supabase accessible via Cloudflare Tunnel"
+    },
+    {
+      "id": "postgres_isolation",
+      "type": "constraint",
+      "rule": "tt-supabase uses its own PostgreSQL instance — NEVER the tt-core postgres",
+      "required": true
+    },
+    {
+      "id": "secret_isolation",
+      "type": "constraint",
+      "rule": "tt-supabase secrets are in tt-supabase/secrets/ — NEVER in tt-core secrets",
+      "required": true
+    }
+  ],
+  "bundle_classification": "companion",
+  "shipped_separately": true,
+  "artifact_name": "TT-Supabase-v14.0tar.gz"
+}

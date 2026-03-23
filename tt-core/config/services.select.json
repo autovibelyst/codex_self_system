@@ -1,0 +1,75 @@
+{
+  "_comment": "TT-Core service selection configuration — v14.0",
+  "_docs": "Edit this file to define which services to enable for this client installation.",
+  "_usage": "Primary installer input. Linux and Windows installers read this file for client values, optional profiles, and tunnel defaults. Restricted admin routes require explicit acknowledgement via security.allow_restricted_admin_tunnel_routes.",
+  "meta": {
+    "installed_at": "2026-03-14T00:00:00Z",
+    "installed_by": "template",
+    "last_updated_at": "2026-03-14T00:00:00Z",
+    "last_updated_by": "template",
+    "package_version": "v14.0"
+  },
+  "client": {
+    "bind_ip": "127.0.0.1",
+    "name": "Client Name",
+    "domain": "example.local",
+    "timezone": "UTC"
+  },
+  "core": {
+    "postgres": true,
+    "redis": true,
+    "n8n": true,
+    "pgadmin": true,
+    "redisinsight": true,
+    "_comment": "Baseline core services remain required and always-on for TT-Core installs."
+  },
+  "profiles": {
+    "metabase": false,
+    "monitoring": false,
+    "wordpress": false,
+    "kanboard": false,
+    "qdrant": false,
+    "ollama": false,
+    "openwebui": false,
+    "portainer": false,
+    "openclaw": false
+  },
+  "tunnel": {
+    "enabled": false,
+    "routes": {
+      "_comment": "Public-capable routes defined by config/service-catalog.json. Restricted admin routes remain disabled by default and require security.allow_restricted_admin_tunnel_routes=true.",
+      "n8n": true,
+      "metabase": false,
+      "wordpress": false,
+      "pgadmin": false,
+      "kanboard": false,
+      "openwebui": false,
+      "monitoring": false,
+      "portainer": false,
+      "openclaw": false
+    },
+    "subdomains": {
+      "n8n": "n8n",
+      "metabase": "metabase",
+      "wordpress": "wp",
+      "pgadmin": "pgadmin",
+      "kanboard": "kanboard",
+      "openwebui": "openwebui",
+      "monitoring": "monitor",
+      "portainer": "portainer",
+      "openclaw": "ai"
+    },
+    "_token_note": "CF_TUNNEL_TOKEN must be set in compose/tt-tunnel/.env only. Never store tokens in this file."
+  },
+  "backup": {
+    "auto_schedule": true,
+    "retain_days": 30,
+    "backup_time": "02:00",
+    "notify_on_failure": false,
+    "notify_webhook_url": ""
+  },
+  "security": {
+    "allow_restricted_admin_tunnel_routes": false,
+    "notes": "Leave false for normal production use. Set true only if you intentionally expose restricted admin surfaces like pgAdmin, Portainer, or OpenClaw behind strong Cloudflare Access controls."
+  }
+}

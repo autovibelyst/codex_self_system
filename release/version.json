@@ -1,0 +1,28 @@
+{
+  "_schema":        "tt-version/v2",
+  "_authority":     "Sole canonical version source. All scripts must read via release/lib/version.sh or release/lib/Version.ps1.",
+  "_note":          "Never add verdict/readiness fields here. Identity only.",
+  "product_name":   "TT-Production",
+  "package_version": "v14.0",
+  "bundle_name":    "TT-Production-v14.0",
+  "release_name":   "TT-Production v14.0",
+  "release_date":   "2026-03-14",
+  "release_stage":  "general-availability",
+  "release_channel":"stable-commercial",
+  "release_type":   "General Availability — Fully Hardened Commercial Release",
+  "build_id":       "tt-production-v14.0-20260314",
+  "base_version":   "v13.0.8",
+  "component_versions": {
+    "tt-core":     "v14.0",
+    "tt-tunnel":   "v14.0",
+    "tt-supabase": "v14.0",
+    "installer":   "v14.0"
+  },
+  "compat": {
+    "min_docker":   "24.0",
+    "min_compose":  "2.20",
+    "min_bash":     "5.0",
+    "min_pwsh":     "7.2"
+  },
+  "ancestry": "v6.7 → v7.4 → v9.5 → v10.1 → v10.6 → v11.2 → v12.0 → v13.0 → v13.0.8 → v14.0"
+}

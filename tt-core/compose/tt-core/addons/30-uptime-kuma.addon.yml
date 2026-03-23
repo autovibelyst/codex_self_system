@@ -1,0 +1,23 @@
+# Uptime Kuma Addon — TT-Production v14.0
+services:
+  uptime-kuma:
+    container_name: tt-addon-uptime-kuma
+    image: louislam/uptime-kuma:1.23.17
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    ports:
+      - "${TT_BIND_IP}:${TT_UPTIME_KUMA_HOST_PORT}:3001"
+    volumes:
+      - ./volumes/uptime-kuma/data:/app/data
+    networks:
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"

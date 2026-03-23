@@ -1,0 +1,28 @@
+# Addon Template — TT-Production v14.0
+# Copy and rename this file to create a new addon.
+# Naming convention: XX-servicename.addon.yml (XX = 2-digit sort order)
+services:
+  addon-template:
+    # Replace with your service
+    container_name: tt-addon-template
+    image: your-image:tag
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 50m
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 256m
+    environment:
+      TZ: ${TT_TZ}
+    networks:
+      # Choose based on required access level:
+      #   tt_core_internal → postgres/redis access
+      #   tt_shared_net    → public tunnel access
+      #   tt_admin_net     → admin-only access
+      - tt_shared_net
+    security_opt:
+      - "no-new-privileges:true"

@@ -1,0 +1,47 @@
+{
+  "_name": "ai-workstation",
+  "_description": "n8n + Qdrant + Ollama + OpenWebUI for AI workflows",
+  "_use_case": "AI developer workstation. Local LLMs, vector DB, workflow automation.",
+  "tunnel": {
+    "enabled": true,
+    "routes": {
+      "n8n": true,
+      "openwebui": true,
+      "metabase": false,
+      "kanboard": false,
+      "wordpress": false,
+      "pgadmin": false,
+      "monitoring": false,
+      "portainer": false,
+      "openclaw": false
+    }
+  },
+  "profiles": {
+    "metabase": false,
+    "monitoring": true,
+    "wordpress": false,
+    "kanboard": false,
+    "qdrant": true,
+    "ollama": true,
+    "openwebui": true,
+    "portainer": false,
+    "openclaw": true
+  },
+  "security": {
+    "allow_restricted_admin_tunnel_routes": false
+  },
+  "backup": {
+    "auto_schedule": true,
+    "retain_days": 14,
+    "backup_time": "03:00"
+  },
+  "name": "ai-workstation",
+  "version": "13.0.0",
+  "description": "n8n + Ollama + Open WebUI + Qdrant + MinIO \u2014 Full local AI stack",
+  "enabled_services": [
+    "minio",
+    "ollama",
+    "openwebui",
+    "qdrant"
+  ]
+}

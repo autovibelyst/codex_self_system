@@ -1,0 +1,40 @@
+# TT-Production v14.0 — MinIO Object Storage Addon
+# S3-compatible object storage. Use for file uploads, AI datasets,
+# workflow attachments, and any binary object storage need.
+name: tt-core
+
+services:
+  minio:
+    container_name: tt-core-minio
+    image: minio/minio:RELEASE.2025-01-20T14-49-07Z
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: { max-size: 50m, max-file: "3" }
+    deploy:
+      resources:
+        limits:       { memory: 1g }
+        reservations: { memory: 128m }
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER:     ${TT_MINIO_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${TT_MINIO_PASSWORD}
+      TZ:                  ${TT_TZ}
+    healthcheck:
+      test:     ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 15s
+      timeout:  10s
+      retries:  5
+      start_period: 30s
+    ports:
+      - "${TT_BIND_IP}:9000:9000"
+      - "${TT_BIND_IP}:9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - tt_shared_net
+
+volumes:
+  minio_data:

@@ -1,0 +1,71 @@
+# TT-Production v14.0 — Prometheus + Grafana Monitoring Addon
+# SECURITY NOTE: Prometheus is on tt_admin_net ONLY (never tunneled publicly).
+# Grafana is on tt_shared_net with restricted_admin tunnel tier.
+name: tt-core
+
+services:
+  prometheus:
+    container_name: tt-core-prometheus
+    image: prom/prometheus:v2.51.2
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: { max-size: 50m, max-file: "3" }
+    deploy:
+      resources:
+        limits:       { memory: 512m }
+        reservations: { memory: 64m }
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=15d
+      - --web.enable-lifecycle
+    ports:
+      - "${TT_BIND_IP}:9090:9090"
+    volumes:
+      - ./volumes/prometheus:/etc/prometheus:ro
+      - prometheus_data:/prometheus
+    networks:
+      - tt_admin_net            # internal only — NEVER on tt_shared_net
+    healthcheck:
+      test:     ["CMD", "wget", "-qO-", "http://localhost:9090/-/healthy"]
+      interval: 15s
+      timeout:  5s
+      retries:  5
+
+  grafana:
+    container_name: tt-core-grafana
+    image: grafana/grafana:10.4.2
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options: { max-size: 50m, max-file: "3" }
+    deploy:
+      resources:
+        limits:       { memory: 512m }
+        reservations: { memory: 64m }
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${TT_GRAFANA_PASSWORD}
+      GF_SERVER_ROOT_URL:         ${TT_GRAFANA_URL:-http://localhost:3001}
+      GF_USERS_ALLOW_SIGN_UP:     "false"
+      TZ:                         ${TT_TZ}
+    ports:
+      - "${TT_BIND_IP}:3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - tt_shared_net            # tunnel-eligible (restricted_admin tier)
+      - tt_admin_net             # can reach prometheus
+    depends_on:
+      - prometheus
+    healthcheck:
+      test:     ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 15s
+      timeout:  5s
+      retries:  5
+
+volumes:
+  prometheus_data:
+  grafana_data:

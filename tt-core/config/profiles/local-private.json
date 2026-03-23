@@ -1,0 +1,38 @@
+{
+  "_name": "local-private",
+  "_description": "Private workstation — no public exposure",
+  "_use_case": "Developer workstation, internal team use, privacy-first setup.",
+  "tunnel": {
+    "enabled": false,
+    "routes": {
+      "n8n": false,
+      "metabase": false,
+      "wordpress": false,
+      "pgadmin": false,
+      "kanboard": false,
+      "openwebui": false,
+      "monitoring": false,
+      "portainer": false,
+      "openclaw": false
+    }
+  },
+  "profiles": {
+    "metabase": false,
+    "monitoring": false,
+    "wordpress": false,
+    "kanboard": false,
+    "qdrant": false,
+    "ollama": false,
+    "openwebui": false,
+    "portainer": false,
+    "openclaw": false
+  },
+  "security": {
+    "allow_restricted_admin_tunnel_routes": false
+  },
+  "backup": {
+    "auto_schedule": true,
+    "retain_days": 30,
+    "backup_time": "02:00"
+  }
+}

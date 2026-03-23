@@ -1,0 +1,16 @@
+{
+  "_schema": "tt-security-ack/v1",
+  "_instructions": "Complete ALL fields to enable restricted admin tunnel routes. Signature = sha256(operator_name|hostname|acknowledged_at|services_acknowledged_sorted_csv). Run scripts-linux/verify-security-ack.sh to validate.",
+  "_is_template": true,
+  "operator_name": "",
+  "operator_email": "",
+  "hostname": "",
+  "acknowledged_at": "",
+  "acknowledged_risks": [
+    "pgAdmin exposes full PostgreSQL administrative control over all databases",
+    "Portainer grants root-equivalent Docker daemon access to the host",
+    "OpenClaw has broad automation permissions over the stack"
+  ],
+  "services_acknowledged": [],
+  "signature": ""
+}
