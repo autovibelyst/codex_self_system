@@ -3,6 +3,7 @@ import argparse
 import datetime as dt
 import json
 from pathlib import Path
+import subprocess
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,7 +38,29 @@ def detect_version(bundle_root: Path, explicit_version: str) -> str:
     return 'unknown'
 
 
-def collect_entries(bundle_root: Path, output_path: Path) -> list[dict[str, object]]:
+def load_git_tracked_paths(bundle_root: Path) -> set[str] | None:
+    git_dir = bundle_root / '.git'
+    if not git_dir.exists():
+        return None
+
+    try:
+        proc = subprocess.run(
+            ['git', '-C', str(bundle_root), 'ls-files', '-z'],
+            check=True,
+            capture_output=True,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return None
+
+    tracked: set[str] = set()
+    for raw in proc.stdout.split(b'\0'):
+        if not raw:
+            continue
+        tracked.add(raw.decode('utf-8', errors='surrogateescape').replace('\\', '/'))
+    return tracked
+
+
+def collect_entries(bundle_root: Path, output_path: Path, tracked_paths: set[str] | None) -> list[dict[str, object]]:
     entries: list[dict[str, object]] = []
     for path in sorted(bundle_root.rglob('*')):
         if not path.is_file():
@@ -45,6 +68,8 @@ def collect_entries(bundle_root: Path, output_path: Path) -> list[dict[str, obje
         if path.resolve() == output_path.resolve():
             continue
         rel = path.relative_to(bundle_root).as_posix()
+        if tracked_paths is not None and rel not in tracked_paths:
+            continue
         entries.append({'path': rel, 'size': path.stat().st_size})
     return entries
 
@@ -85,7 +110,8 @@ def main() -> int:
     bundle_name = args.bundle_name or bundle_root.name
     generated_at = dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat().replace('+00:00', 'Z')
 
-    base_entries = collect_entries(bundle_root, output_path)
+    tracked_paths = load_git_tracked_paths(bundle_root)
+    base_entries = collect_entries(bundle_root, output_path, tracked_paths)
     rel_output = output_path.relative_to(bundle_root).as_posix()
     required_root_files = sorted(dict.fromkeys(args.required_root_files))
 

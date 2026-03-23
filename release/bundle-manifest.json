@@ -7,7 +7,7 @@
   "version": "v14.0",
   "bundle_name": "TT-Production-v14.0",
   "bundle_root": "TT-Production-v14.0",
-  "generated_at": "2026-03-23T20:15:17Z",
+  "generated_at": "2026-03-23T21:39:43Z",
   "total_files": 249,
   "file_count": 249,
   "required_root_files": [
@@ -32,7 +32,7 @@
     },
     {
       "path": "CUSTOMER_ACCEPTANCE_CHECKLIST.md",
-      "size": 4180
+      "size": 4158
     },
     {
       "path": "DELIVERY_CHECKLIST.md",
@@ -49,6 +49,18 @@
     {
       "path": "MASTER_GUIDE.md",
       "size": 6899
+    },
+    {
+      "path": "RELEASE_AUDIT_SUMMARY.md",
+      "size": 2066
+    },
+    {
+      "path": "RELEASE_NOTES_v14.0.md",
+      "size": 4008
+    },
+    {
+      "path": "SYSTEM_REQUIREMENTS.md",
+      "size": 2689
     },
     {
       "path": "release/CHANGELOG.md",
@@ -75,20 +87,28 @@
       "size": 1069
     },
     {
-      "path": "RELEASE_AUDIT_SUMMARY.md",
-      "size": 2066
+      "path": "tt-core/INDEX.md",
+      "size": 627
     },
     {
-      "path": "RELEASE_NOTES_v14.0.md",
-      "size": 4008
+      "path": "tt-core/PORT_POLICY.md",
+      "size": 915
     },
     {
-      "path": "SYSTEM_REQUIREMENTS.md",
-      "size": 2689
+      "path": "tt-core/README.md",
+      "size": 1442
+    },
+    {
+      "path": "tt-core/README_ADDONS.md",
+      "size": 3018
     },
     {
       "path": "tt-core/compose/tt-core/.env.example",
       "size": 5406
+    },
+    {
+      "path": "tt-core/compose/tt-core/Dockerfile.openclaw",
+      "size": 4243
     },
     {
       "path": "tt-core/compose/tt-core/addons/00-template.addon.yml",
@@ -137,10 +157,6 @@
     {
       "path": "tt-core/compose/tt-core/docker-compose.yml",
       "size": 15775
-    },
-    {
-      "path": "tt-core/compose/tt-core/Dockerfile.openclaw",
-      "size": 4243
     },
     {
       "path": "tt-core/compose/tt-core/volumes/openclaw/config/openclaw_template.json",
@@ -212,7 +228,7 @@
     },
     {
       "path": "tt-core/config/service-catalog.json",
-      "size": 18488
+      "size": 18485
     },
     {
       "path": "tt-core/config/services.select.json",
@@ -383,10 +399,6 @@
       "size": 327
     },
     {
-      "path": "tt-core/INDEX.md",
-      "size": 627
-    },
-    {
       "path": "tt-core/installer/Install-TTCore.cmd",
       "size": 1149
     },
@@ -397,6 +409,10 @@
     {
       "path": "tt-core/installer/Install-TTCore.sh",
       "size": 17734
+    },
+    {
+      "path": "tt-core/installer/README.md",
+      "size": 785
     },
     {
       "path": "tt-core/installer/lib/profiles.sh",
@@ -411,22 +427,6 @@
       "size": 3533
     },
     {
-      "path": "tt-core/installer/README.md",
-      "size": 785
-    },
-    {
-      "path": "tt-core/PORT_POLICY.md",
-      "size": 915
-    },
-    {
-      "path": "tt-core/README.md",
-      "size": 1442
-    },
-    {
-      "path": "tt-core/README_ADDONS.md",
-      "size": 3018
-    },
-    {
       "path": "tt-core/release/CHANGELOG.md",
       "size": 3720
     },
@@ -435,28 +435,20 @@
       "size": 2568
     },
     {
-      "path": "tt-core/release/manifest.json",
-      "size": 3069
-    },
-    {
       "path": "tt-core/release/PRODUCTION_SIGNOFF_TEMPLATE.md",
       "size": 404
-    },
-    {
-      "path": "tt-core/release/validate-release.ps1",
-      "size": 41299
     },
     {
       "path": "tt-core/release/VERSIONING.md",
       "size": 1282
     },
     {
-      "path": "tt-core/scripts/_compose_args.ps1",
-      "size": 1944
+      "path": "tt-core/release/manifest.json",
+      "size": 3069
     },
     {
-      "path": "tt-core/scripts/_profiles.ps1",
-      "size": 525
+      "path": "tt-core/release/validate-release.ps1",
+      "size": 41299
     },
     {
       "path": "tt-core/scripts/Approve-Telegram.cmd",
@@ -465,46 +457,6 @@
     {
       "path": "tt-core/scripts/Approve-Telegram.ps1",
       "size": 4368
-    },
-    {
-      "path": "tt-core/scripts/backup/_lib/BackupLib.ps1",
-      "size": 1903
-    },
-    {
-      "path": "tt-core/scripts/backup/Backup-All.ps1",
-      "size": 5669
-    },
-    {
-      "path": "tt-core/scripts/backup/Backup-OffsiteSync.ps1",
-      "size": 5500
-    },
-    {
-      "path": "tt-core/scripts/backup/Backup-PostgresDumps.ps1",
-      "size": 1971
-    },
-    {
-      "path": "tt-core/scripts/backup/Backup-Retention.ps1",
-      "size": 1874
-    },
-    {
-      "path": "tt-core/scripts/backup/Backup-Volumes.ps1",
-      "size": 688
-    },
-    {
-      "path": "tt-core/scripts/backup/Restore-All.ps1",
-      "size": 8186
-    },
-    {
-      "path": "tt-core/scripts/backup/Restore-PostgresDump.ps1",
-      "size": 2300
-    },
-    {
-      "path": "tt-core/scripts/backup/Setup-BackupSchedule.ps1",
-      "size": 3634
-    },
-    {
-      "path": "tt-core/scripts/deps.json",
-      "size": 367
     },
     {
       "path": "tt-core/scripts/Diag.cmd",
@@ -541,22 +493,6 @@
     {
       "path": "tt-core/scripts/Init-TTCore.ps1",
       "size": 13644
-    },
-    {
-      "path": "tt-core/scripts/lib/Env.ps1",
-      "size": 10424
-    },
-    {
-      "path": "tt-core/scripts/lib/RuntimeEnv.ps1",
-      "size": 2581
-    },
-    {
-      "path": "tt-core/scripts/lib/ServiceCatalog.ps1",
-      "size": 11428
-    },
-    {
-      "path": "tt-core/scripts/lib/Version.ps1",
-      "size": 372
     },
     {
       "path": "tt-core/scripts/Lock-ComposeImages.cmd",
@@ -699,14 +635,6 @@
       "size": 1681
     },
     {
-      "path": "tt-core/scripts/ttcore.cmd",
-      "size": 76
-    },
-    {
-      "path": "tt-core/scripts/ttcore.ps1",
-      "size": 2975
-    },
-    {
       "path": "tt-core/scripts/Update-TTCore.cmd",
       "size": 130
     },
@@ -725,6 +653,82 @@
     {
       "path": "tt-core/scripts/Update-TunnelURLs.ps1",
       "size": 6883
+    },
+    {
+      "path": "tt-core/scripts/_compose_args.ps1",
+      "size": 1944
+    },
+    {
+      "path": "tt-core/scripts/_profiles.ps1",
+      "size": 525
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-All.ps1",
+      "size": 5669
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-OffsiteSync.ps1",
+      "size": 5500
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-PostgresDumps.ps1",
+      "size": 1971
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-Retention.ps1",
+      "size": 1874
+    },
+    {
+      "path": "tt-core/scripts/backup/Backup-Volumes.ps1",
+      "size": 688
+    },
+    {
+      "path": "tt-core/scripts/backup/Restore-All.ps1",
+      "size": 8186
+    },
+    {
+      "path": "tt-core/scripts/backup/Restore-PostgresDump.ps1",
+      "size": 2300
+    },
+    {
+      "path": "tt-core/scripts/backup/Setup-BackupSchedule.ps1",
+      "size": 3634
+    },
+    {
+      "path": "tt-core/scripts/backup/_lib/BackupLib.ps1",
+      "size": 1903
+    },
+    {
+      "path": "tt-core/scripts/deps.json",
+      "size": 367
+    },
+    {
+      "path": "tt-core/scripts/lib/Env.ps1",
+      "size": 10424
+    },
+    {
+      "path": "tt-core/scripts/lib/RuntimeEnv.ps1",
+      "size": 2581
+    },
+    {
+      "path": "tt-core/scripts/lib/ServiceCatalog.ps1",
+      "size": 11428
+    },
+    {
+      "path": "tt-core/scripts/lib/Version.ps1",
+      "size": 372
+    },
+    {
+      "path": "tt-core/scripts/ttcore.cmd",
+      "size": 76
+    },
+    {
+      "path": "tt-core/scripts/ttcore.ps1",
+      "size": 2975
+    },
+    {
+      "path": "tt-core/scripts-linux/README.md",
+      "size": 3263
     },
     {
       "path": "tt-core/scripts-linux/apply-profile.sh",
@@ -777,10 +781,6 @@
     {
       "path": "tt-core/scripts-linux/preflight-supabase.sh",
       "size": 2332
-    },
-    {
-      "path": "tt-core/scripts-linux/README.md",
-      "size": 3263
     },
     {
       "path": "tt-core/scripts-linux/restore.sh",
@@ -879,6 +879,14 @@
       "size": 332
     },
     {
+      "path": "tt-supabase/INDEX.md",
+      "size": 205
+    },
+    {
+      "path": "tt-supabase/README.md",
+      "size": 994
+    },
+    {
       "path": "tt-supabase/compose/tt-supabase/docker-compose.yml",
       "size": 16700
     },
@@ -937,14 +945,6 @@
     {
       "path": "tt-supabase/env/tt-supabase.env.example",
       "size": 6603
-    },
-    {
-      "path": "tt-supabase/INDEX.md",
-      "size": 205
-    },
-    {
-      "path": "tt-supabase/README.md",
-      "size": 994
     },
     {
       "path": "tt-supabase/release/CHANGELOG.md",
